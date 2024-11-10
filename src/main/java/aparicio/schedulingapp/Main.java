@@ -22,6 +22,8 @@ public class Main extends Application {
 
         JDBC.openConnection();
         JDBC.closeConnection();
+
+        System.out.println("Hello from HP!");
         launch();
 
     }
