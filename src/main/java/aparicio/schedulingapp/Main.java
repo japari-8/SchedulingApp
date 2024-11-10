@@ -21,10 +21,10 @@ public class Main extends Application {
     public static void main(String[] args) {
 
         JDBC.openConnection();
-        JDBC.closeConnection();
 
-        System.out.println("Hello from HP!");
         launch();
+
+        JDBC.closeConnection();
 
     }
 }
