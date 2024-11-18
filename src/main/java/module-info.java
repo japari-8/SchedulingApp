@@ -4,6 +4,6 @@ module aparicio.schedulingapp {
     requires java.sql;
 
 
-    opens aparicio.schedulingapp to javafx.fxml;
-    exports aparicio.schedulingapp;
+    opens aparicio.controller to javafx.fxml;
+    exports aparicio.controller;
 }

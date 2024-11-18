@@ -1,4 +1,4 @@
-package aparicio.schedulingapp;
+package aparicio.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
