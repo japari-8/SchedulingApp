@@ -8,9 +8,9 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aparicio.controller.LoginController">
    <children>
       <Button layoutX="502.0" layoutY="242.0" mnemonicParsing="false" onAction="#onLogin" text="Log in" />
-      <Label layoutX="207.0" layoutY="56.0" text="Please provide credentials to Log in" />
-      <TextField layoutX="226.0" layoutY="125.0" />
-      <TextField layoutX="226.0" layoutY="157.0" />
+      <Label alignment="CENTER" layoutX="206.0" layoutY="46.0" text="Please provide credentials to Log in" />
+      <TextField layoutX="220.0" layoutY="169.0" opacity="0.8" prefHeight="33.0" prefWidth="160.0" promptText="password" />
+      <TextField layoutX="220.0" layoutY="123.0" opacity="0.8" prefHeight="33.0" prefWidth="160.0" promptText="username" />
       <Label fx:id="Location" layoutX="89.0" layoutY="246.0" text="Location" />
    </children>
 </AnchorPane>
