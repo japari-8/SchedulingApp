@@ -13,10 +13,15 @@ public class UpdateAppointment implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        
         System.out.println("I am initialized");
     }
 
-    public void onLogin(ActionEvent actionEvent) {
-        System.out.println("I am clicked!");
+    
+    public void onSaveUpdateAppnt(ActionEvent actionEvent) {
+    }
+
+    public void onCancelUpdateAppnt(ActionEvent actionEvent) {
+
     }
 }

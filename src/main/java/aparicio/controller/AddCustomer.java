@@ -13,10 +13,14 @@ public class AddCustomer implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        
         System.out.println("I am initialized");
     }
 
-    public void onLogin(ActionEvent actionEvent) {
-        System.out.println("I am clicked!");
+    public void onSaveAddCustomer(ActionEvent actionEvent) {
+    }
+
+    public void onCancelAddCustomer(ActionEvent actionEvent) {
+
     }
 }

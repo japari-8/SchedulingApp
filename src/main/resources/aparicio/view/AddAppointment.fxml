@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aparicio.controller.Login">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aparicio.controller.AddAppointment">
    <children>
       <VBox prefHeight="700.0" prefWidth="800.0">
          <children>
@@ -81,8 +82,11 @@
                         </Label>
                         <HBox alignment="CENTER" prefHeight="45.0" prefWidth="375.0" spacing="120.0">
                            <children>
-                              <RadioButton mnemonicParsing="false" text="Monthly" />
-                              <RadioButton mnemonicParsing="false" text="Weekly" />
+                              <RadioButton mnemonicParsing="false" text="Monthly">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="calendarViewTG" />
+                                 </toggleGroup></RadioButton>
+                              <RadioButton mnemonicParsing="false" text="Weekly" toggleGroup="$calendarViewTG" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="38.0" prefWidth="375.0" spacing="20.0">
@@ -102,8 +106,8 @@
             <Line endX="700.0" startX="-100.0" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="ADD" />
-                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="CANCEL" />
+                  <Button mnemonicParsing="false" onAction="#onSaveAddAppnt" prefHeight="25.0" prefWidth="75.0" text="SAVE" />
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onCancelAddAppnt" prefHeight="25.0" prefWidth="75.0" text="CANCEL" />
                </children>
             </HBox>
          </children>
