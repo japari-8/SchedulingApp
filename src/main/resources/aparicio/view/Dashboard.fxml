@@ -73,7 +73,7 @@
                   <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="980.0" spacing="20.0">
                      <children>
                         <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="RUN REPORT" />
-                        <Button mnemonicParsing="false" prefWidth="60.0" text="EXIT" />
+                        <Button mnemonicParsing="false" onAction="#onExit" prefWidth="60.0" text="EXIT" />
                      </children>
                      <padding>
                         <Insets right="20.0" />

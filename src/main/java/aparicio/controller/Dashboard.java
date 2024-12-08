@@ -62,4 +62,8 @@ public class Dashboard implements Initializable {
     public void onDeleteAppnt(ActionEvent actionEvent) {
         System.out.println("Delete Appnt button clicked");
     }
+
+    public void onExit(ActionEvent actionEvent) {
+        System.exit(0);
+    }
 }

@@ -69,7 +69,7 @@
                         <ColorAdjust />
                      </effect>
                   </Button>
-                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onCancelAddCustomer" prefHeight="35.0" prefWidth="60.0" text="CANCEL" />
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#backToDashboard" prefHeight="35.0" prefWidth="60.0" text="CANCEL" />
                </children>
             </HBox>
          </children>
