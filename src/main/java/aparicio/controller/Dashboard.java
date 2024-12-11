@@ -44,7 +44,7 @@ public class Dashboard implements Initializable {
     public void onAddAppnt(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/AddAppointment.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 800, 700);
+        Scene scene = new Scene(root, 600, 700);
         stage.setTitle("Add Appointment Form");
         stage.setScene(scene);
         stage.show();
@@ -53,7 +53,7 @@ public class Dashboard implements Initializable {
     public void onUpdateAppnt(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/UpdateAppointment.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 800, 700);
+        Scene scene = new Scene(root, 600, 700);
         stage.setTitle("Update Appointment Form");
         stage.setScene(scene);
         stage.show();

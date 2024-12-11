@@ -15,7 +15,6 @@ public class Appointment {
     private int contactId;
 
 
-    // FIXME: Does constructor need more parameters?
     public Appointment(int appointmentId, String tittle, String description, String location, String type,
                        LocalDateTime startDateTime, LocalDateTime endDateTime, int customerId, int userId, int contactId) {
         this.appointmentId = appointmentId;
