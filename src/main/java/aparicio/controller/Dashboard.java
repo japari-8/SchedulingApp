@@ -1,5 +1,6 @@
 package aparicio.controller;
 
+import helper.JDBC;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -86,6 +87,8 @@ public class Dashboard implements Initializable {
     }
 
     public void onExit(ActionEvent actionEvent) {
+
+        JDBC.closeConnection();
         System.exit(0);
     }
 }

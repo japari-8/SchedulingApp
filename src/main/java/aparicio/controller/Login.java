@@ -68,7 +68,7 @@ public class Login implements Initializable {
     /*    String uName = userName.getText();
         String pWord = password.getText();
 
-        //Following tests credentials and translated error message but not tied to database yet.
+        //The following code tests credentials and translated error message but not tied to database yet.
         if (uName.equals("test") & pWord.equals("Admin")) {
 
             Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));

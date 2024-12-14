@@ -27,18 +27,20 @@ public class Main extends Application {
         //Locale.setDefault(new Locale("fr"));
 
         JDBC.openConnection();
-        //launch();
+        launch();
 
+    /*  Use following if else statements to test CRUD
 
-        int rowsaffected = CustomerDAO.updateCust(7,  "Jay Three",  "333 Seeless Ave.",  "99999",  "333-333-3333",
+        int rowsAffected = CustomerDAO.updateCust(7,  "Jay Three",  "333 Seeless Ave.",  "99999",  "333-333-3333",
          5);
 
-        if (rowsaffected > 0) {
+        if (rowsAffected > 0) {
             System.out.println("Update Successful!");
         }
         else {
             System.out.println("Update Failed!");
         }
+    */
 
 
         JDBC.closeConnection();
