@@ -41,14 +41,24 @@
             <VBox alignment="TOP_CENTER" prefHeight="397.0" prefWidth="980.0">
                <children>
                   <Line endX="876.2929077148438" endY="-1.2426408529281616" startX="-100.0" strokeWidth="0.25" />
-                  <Label prefHeight="27.0" prefWidth="113.0" text="Appointments">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
+                  <HBox alignment="CENTER" prefHeight="64.0" prefWidth="980.0" spacing="20.0">
+                     <children>
+                        <Label prefHeight="43.0" prefWidth="125.0" text="Appointments">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="10.0" top="6.0" />
+                           </padding>
+                        </Label>
+                        <Label text="View" />
+                        <RadioButton mnemonicParsing="false" text="Monthly" />
+                        <RadioButton mnemonicParsing="false" text="Weekly" />
+                     </children>
                      <padding>
-                        <Insets bottom="10.0" top="6.0" />
+                        <Insets top="20.0" />
                      </padding>
-                  </Label>
+                  </HBox>
                   <TableView fx:id="appntTableView" prefHeight="250.0" prefWidth="980.0">
                     <columns>
                       <TableColumn fx:id="AppntCol" prefWidth="100.0" text="Appointment ID" />

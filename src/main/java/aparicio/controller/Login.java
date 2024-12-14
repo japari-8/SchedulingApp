@@ -56,7 +56,16 @@ public class Login implements Initializable {
 
     public void onLogin(ActionEvent actionEvent) throws IOException {
 
-        String uName = userName.getText();
+        //Use for testing. Delete when ready to run application.
+        Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1000, 700);
+        stage.setTitle("Dashboard");
+        stage.setScene(scene);
+        stage.show();
+
+
+    /*    String uName = userName.getText();
         String pWord = password.getText();
 
         //Following tests credentials and translated error message but not tied to database yet.
@@ -75,13 +84,15 @@ public class Login implements Initializable {
             alert.setTitle("Error Dialog");
 
             if (Locale.getDefault().getLanguage().equals("fr")) {
-                alert.setContentText(rb2.getString("username") + " " + rb2.getString("or") + " " + rb2.getString("password") + " " + rb2.getString("incorrect"));
+                alert.setContentText(rb2.getString("username") + " " + rb2.getString("or") + " " +
+                        rb2.getString("password") + " " + rb2.getString("incorrect"));
             }
             else {
                 alert.setContentText("Incorrect username or password");
             }
             alert.showAndWait();
         }
+    */
     }
 
 

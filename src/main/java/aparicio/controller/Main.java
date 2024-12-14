@@ -1,5 +1,7 @@
 package aparicio.controller;
 
+import dao.CustomerDAO;
+import dao.UserDAO;
 import helper.JDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Locale;
 
 public class Main extends Application {
@@ -19,12 +22,24 @@ public class Main extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
-        Locale.setDefault(new Locale("fr"));
+        //Locale.setDefault(new Locale("fr"));
 
         JDBC.openConnection();
-        launch();
+        //launch();
+
+
+        int rowsaffected = CustomerDAO.updateCust(7,  "Jay Three",  "333 Seeless Ave.",  "99999",  "333-333-3333",
+         5);
+
+        if (rowsaffected > 0) {
+            System.out.println("Update Successful!");
+        }
+        else {
+            System.out.println("Update Failed!");
+        }
+
 
         JDBC.closeConnection();
 

@@ -7,6 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -14,6 +16,26 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Dashboard implements Initializable {
+
+    public TableView customerTableView;
+    public TableColumn fullNameCol;
+    public TableColumn addressCol;
+    public TableColumn postalCodeCol;
+    public TableColumn phoneNumCol;
+    public TableColumn customerIdCol;
+    public TableColumn divisionIdCol;
+    
+    public TableView appntTableView;
+    public TableColumn AppntCol;
+    public TableColumn titttleCol;
+    public TableColumn descrptionCol;
+    public TableColumn locationCol;
+    public TableColumn typeCol;
+    public TableColumn startDateTimeCol;
+    public TableColumn endDateTimeCol;
+    public TableColumn customerIdCol2;
+    public TableColumn userIdCol;
+    public TableColumn contactIdCol;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
