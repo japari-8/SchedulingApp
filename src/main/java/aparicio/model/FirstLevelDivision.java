@@ -1,4 +1,4 @@
-package model;
+package aparicio.model;
 
 public class FirstLevelDivision {
     private int divisionId;
@@ -23,6 +23,11 @@ public class FirstLevelDivision {
     }
 
     public String getDivision() {
+        return division;
+    }
+
+    @Override
+    public String toString() {
         return division;
     }
 }

@@ -20,12 +20,13 @@
             </Label>
             <TableView fx:id="customerTableView" prefHeight="200.0" prefWidth="980.0">
               <columns>
-                <TableColumn fx:id="fullNameCol" prefWidth="200.0" text="Name" />
-                <TableColumn fx:id="addressCol" prefWidth="240.0" text="Address" />
+                  <TableColumn fx:id="customerIdCol" prefWidth="90.0" text="Customer ID" />
+                <TableColumn fx:id="fullNameCol" prefWidth="160.0" text="Name" />
+                <TableColumn fx:id="addressCol" prefWidth="180.0" text="Address" />
                   <TableColumn fx:id="postalCodeCol" prefWidth="180.0" text="Postal Code" />
                   <TableColumn fx:id="phoneNumCol" prefWidth="180.0" text="Phone #" />
-                  <TableColumn fx:id="customerIdCol" prefWidth="90.0" text="Customer ID" />
                   <TableColumn fx:id="divisionIdCol" prefWidth="90.0" text="Division Id" />
+                  <TableColumn fx:id="countryCol" prefWidth="100.0" text="Country" />
               </columns>
             </TableView>
             <HBox alignment="CENTER" prefHeight="45.0" prefWidth="980.0" spacing="20.0">

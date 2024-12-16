@@ -1,4 +1,4 @@
-package model;
+package aparicio.model;
 
 import java.time.LocalDateTime;
 

@@ -1,15 +1,20 @@
 package aparicio.controller;
 
-import dao.CustomerDAO;
+import aparicio.dao.CountryDAO;
+import aparicio.dao.FirstLevDivDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import aparicio.model.Country;
+import aparicio.model.FirstLevelDivision;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,12 +29,37 @@ public class AddCustomer implements Initializable {
     public TextField postalCodeAdd;
     public TextField phoneNumAdd;
     public TextField customerId;
+    public ComboBox<Country> countryCombo;
+    public ComboBox<FirstLevelDivision> firstLevDivCombo;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        
-        System.out.println("I am initialized");
+
+        countryCombo.setItems(CountryDAO.getAllCountries());
+
     }
+
+    public void displayFirstLevDiv(MouseEvent mouseEvent) {
+
+        try {
+            if (countryCombo.getSelectionModel().getSelectedItem().getCountryId() == 1) {
+                firstLevDivCombo.setItems(FirstLevDivDAO.getUsFirstLevDiv());
+            }
+            else if (countryCombo.getSelectionModel().getSelectedItem().getCountryId() == 2){
+                firstLevDivCombo.setItems(FirstLevDivDAO.getUkFirstLevDiv());
+            }
+            else if (countryCombo.getSelectionModel().getSelectedItem().getCountryId() == 3){
+                firstLevDivCombo.setItems(FirstLevDivDAO.getCanFirstLevDiv());
+            }
+        }
+        catch(NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setContentText(" Please select Country then select State/Province");
+            alert.showAndWait();
+        }
+    }
+
 
     public void onSaveAddCustomer(ActionEvent actionEvent) throws SQLException {
 
@@ -53,5 +83,6 @@ public class AddCustomer implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
 
 }

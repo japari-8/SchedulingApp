@@ -1,14 +1,15 @@
-package model;
+package aparicio.model;
 
 public class Customer {
+
     private int customerId;
     private String name;
     private String address;
-    private int postalCode;
-    private int phoneNum;
+    private String postalCode;
+    private String phoneNum;
     private int divisionId;
 
-    public Customer(int customerId, String name, String address, int postalCode, int phoneNum, int divisionId) {
+    public Customer(int customerId, String name, String address, String postalCode, String phoneNum, int divisionId) {
         this.customerId = customerId;
         this.name = name;
         this.address = address;
@@ -29,11 +30,11 @@ public class Customer {
         this.address = address;
     }
 
-    public void setPostalCode(int postalCode) {
+    public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
 
-    public void setPhoneNum(int phoneNum) {
+    public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
     }
 
@@ -54,11 +55,11 @@ public class Customer {
         return address;
     }
 
-    public int getPostalCode() {
+    public String getPostalCode() {
         return postalCode;
     }
 
-    public int getPhoneNum() {
+    public String getPhoneNum() {
         return phoneNum;
     }
 

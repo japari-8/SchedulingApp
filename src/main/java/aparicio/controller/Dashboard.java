@@ -1,29 +1,34 @@
 package aparicio.controller;
 
-import helper.JDBC;
+import aparicio.dao.CustomerDAO;
+import aparicio.helper.JDBC;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import aparicio.model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
 public class Dashboard implements Initializable {
 
     public TableView customerTableView;
+    public TableColumn customerIdCol;
     public TableColumn fullNameCol;
     public TableColumn addressCol;
     public TableColumn postalCodeCol;
     public TableColumn phoneNumCol;
-    public TableColumn customerIdCol;
     public TableColumn divisionIdCol;
     
     public TableView appntTableView;
@@ -38,9 +43,34 @@ public class Dashboard implements Initializable {
     public TableColumn userIdCol;
     public TableColumn contactIdCol;
 
+
+
+    private ObservableList <Customer> custListFromDAO = FXCollections.observableArrayList();
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+
+
+
+        custListFromDAO = CustomerDAO.getAllCustomerData();
+        System.out.println(custListFromDAO);
+        customerTableView.setItems(custListFromDAO);
+
+        fullNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        postalCodeCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+        phoneNumCol.setCellValueFactory(new PropertyValueFactory<>("phoneNum"));
+        customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        divisionIdCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
+
+
+
     }
+
+
+
 
     public void onAddCustomer(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/AddCustomer.fxml"));

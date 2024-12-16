@@ -1,13 +1,47 @@
-package dao;
+package aparicio.dao;
 
-import helper.JDBC;
+import aparicio.helper.JDBC;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import aparicio.model.Customer;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class CustomerDAO {
 
-    public static void insertCust(String fullName, String address, String postalCode, String phoneNum, int divisionId)
+
+    public static ObservableList<Customer> getAllCustomerData() {
+
+        ObservableList<Customer> allCustData = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID FROM customers";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int custId = rs.getInt("Customer_ID");
+                String custName = rs.getString("Customer_Name");
+                String custAddress = rs.getString("Address");
+                String custPostCode = rs.getString("Postal_Code");
+                String custPhone = rs.getString("Phone");
+                int custDivId = rs.getInt("Division_ID");
+
+                Customer c = new Customer(custId, custName, custAddress, custPostCode, custPhone, custDivId);
+                allCustData.add(c);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allCustData;
+    }
+
+
+
+    public static void addCust(String fullName, String address, String postalCode, String phoneNum, int divisionId)
             throws SQLException {
         String sql = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, " +
                     "Last_Update, Last_Updated_By, Division_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";

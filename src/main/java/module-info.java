@@ -6,4 +6,6 @@ module aparicio.schedulingapp {
 
     opens aparicio.controller to javafx.fxml;
     exports aparicio.controller;
+    opens aparicio.model to javafx.fxml;
+    exports aparicio.model;
 }

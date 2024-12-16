@@ -1,4 +1,4 @@
-package dao;
+package aparicio.dao;
 
 public class ContactDAO {
 }
