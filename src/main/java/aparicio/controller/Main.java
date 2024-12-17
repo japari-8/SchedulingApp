@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Locale;
 
 public class Main extends Application {
     @Override
@@ -25,19 +26,6 @@ public class Main extends Application {
 
         JDBC.openConnection();
         launch();
-
-    /*  Use following if else statements to test CRUD
-
-        int rowsAffected = CustomerDAO.updateCust(7,  "Jay Three",  "333 Seeless Ave.",  "99999",  "333-333-3333",
-         5);
-
-        if (rowsAffected > 0) {
-            System.out.println("Update Successful!");
-        }
-        else {
-            System.out.println("Update Failed!");
-        }
-    */
 
 
         JDBC.closeConnection();

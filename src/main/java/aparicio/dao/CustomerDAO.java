@@ -13,11 +13,10 @@ public abstract class CustomerDAO {
 
 
     public static ObservableList<Customer> getAllCustomerData() {
-
         ObservableList<Customer> allCustData = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID FROM customers";
+            String sql = "SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID, Country FROM customers, countries";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -28,8 +27,9 @@ public abstract class CustomerDAO {
                 String custPostCode = rs.getString("Postal_Code");
                 String custPhone = rs.getString("Phone");
                 int custDivId = rs.getInt("Division_ID");
+                String custCountry = rs.getString("Country");
 
-                Customer c = new Customer(custId, custName, custAddress, custPostCode, custPhone, custDivId);
+                Customer c = new Customer(custId, custName, custAddress, custPostCode, custPhone, custDivId, custCountry);
                 allCustData.add(c);
             }
         }

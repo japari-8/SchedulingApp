@@ -42,21 +42,18 @@ public class Dashboard implements Initializable {
     public TableColumn customerIdCol2;
     public TableColumn userIdCol;
     public TableColumn contactIdCol;
+    public TableColumn countryCol;
 
 
-
-    private ObservableList <Customer> custListFromDAO = FXCollections.observableArrayList();
+    //private ObservableList <Customer> custListFromDAO = FXCollections.observableArrayList();
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        //custListFromDAO = CustomerDAO.getAllCustomerData();
 
-
-
-        custListFromDAO = CustomerDAO.getAllCustomerData();
-        System.out.println(custListFromDAO);
-        customerTableView.setItems(custListFromDAO);
+        customerTableView.setItems(CustomerDAO.getAllCustomerData());
 
         fullNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -64,12 +61,9 @@ public class Dashboard implements Initializable {
         phoneNumCol.setCellValueFactory(new PropertyValueFactory<>("phoneNum"));
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         divisionIdCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
-
-
+        countryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
 
     }
-
-
 
 
     public void onAddCustomer(ActionEvent actionEvent) throws IOException {

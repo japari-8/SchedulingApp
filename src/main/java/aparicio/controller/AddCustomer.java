@@ -1,6 +1,7 @@
 package aparicio.controller;
 
 import aparicio.dao.CountryDAO;
+import aparicio.dao.CustomerDAO;
 import aparicio.dao.FirstLevDivDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +21,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+//import static javafx.scene.control.skin.TableSkinUtils.getSelectionModel;
 
 public class AddCustomer implements Initializable {
 
@@ -61,19 +64,24 @@ public class AddCustomer implements Initializable {
     }
 
 
-    public void onSaveAddCustomer(ActionEvent actionEvent) throws SQLException {
+    public void onSaveAddCustomer(ActionEvent actionEvent) throws SQLException, IOException {
 
         String fullName = firstNameAdd.getText() + " " + lastNameAdd.getText();
         String address = addressAdd.getText();
         String postalCode = postalCodeAdd.getText();
         String phoneNum = phoneNumAdd.getText();
+        int divID = firstLevDivCombo.getSelectionModel().getSelectedItem().getDivisionId();
 
+        CustomerDAO.addCust(fullName, address, postalCode, phoneNum, divID);
 
-
-        //CustomerDAO.insertCust(fullName, address, postalCode, phoneNum, 4);
-
-
+        Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1000, 700);
+        stage.setTitle("Dashboard");
+        stage.setScene(scene);
+        stage.show();
     }
+
 
     public void backToDashboard(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
