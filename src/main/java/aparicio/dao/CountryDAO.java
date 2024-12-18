@@ -16,7 +16,7 @@ public abstract class CountryDAO {
         ObservableList<Country> allCountries = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT Country_ID, Country FROM countries;";
+            String sql = "SELECT Country_ID, Country FROM countries";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -35,4 +35,7 @@ public abstract class CountryDAO {
         }
         return allCountries;
     }
+
+
+
 }

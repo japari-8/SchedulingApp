@@ -20,11 +20,12 @@ public class UpdateAppointment implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         
-        System.out.println("I am initialized");
+
     }
 
     
     public void onSaveUpdateAppnt(ActionEvent actionEvent) {
+
     }
 
     public void backToDashboard(ActionEvent actionEvent) throws IOException {

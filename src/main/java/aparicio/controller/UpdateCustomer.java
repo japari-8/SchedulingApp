@@ -1,13 +1,24 @@
 package aparicio.controller;
 
+import aparicio.dao.CountryDAO;
+import aparicio.dao.CustomerDAO;
+import aparicio.dao.FirstLevDivDAO;
+import aparicio.model.Customer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import aparicio.model.Country;
+import aparicio.model.FirstLevelDivision;
+
+//import static javafx.scene.control.skin.TableSkinUtils.getSelectionModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,16 +26,83 @@ import java.util.ResourceBundle;
 
 public class UpdateCustomer implements Initializable {
 
-    public Label location;
+    private static Customer selCustomer = null;
+    public TextField firstNameUpdate;
+    public TextField lastNameUpdate;
+    public TextField addressUpdate;
+    public TextField postalCodeUpdate;
+    public TextField phoneNumUpdate;
+    public TextField updateCustomerId;
+    public ComboBox countryCombo2;
+    public ComboBox firstLevDivCombo;
+
+    public static void passSelCustomer(Customer selCust) {
+       selCustomer = selCust;
+
+   }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        
-        System.out.println("I am initialized");
+
+        String fullName = selCustomer.getName();
+        String[] name = fullName.split(" ");
+        firstNameUpdate.setText(name[0]);
+        lastNameUpdate.setText(name[1]);
+        addressUpdate.setText(selCustomer.getAddress());
+        postalCodeUpdate.setText(selCustomer.getPostalCode());
+        phoneNumUpdate.setText(selCustomer.getPostalCode());
+        updateCustomerId.setText(Integer.toString(selCustomer.getCustomerId()));
+
+        countryCombo2.setItems(CountryDAO.getAllCountries());
+
+        String country = selCustomer.getCountry();
+        int countryId = 0;
+
+        if (country.equals("U.S")) {
+            countryId = 1;
+        }
+        else if (country.equals("UK")) {
+            countryId = 2;
+        }
+        else if (country.equals("Canada")){
+            countryId = 3;
+        }
+
+        Country country1 = new Country(countryId, country);
+        countryCombo2.setValue(country1);
+
+        firstLevDivCombo.setValue(FirstLevDivDAO.getDivision(selCustomer.getDivisionId()));
+
     }
+
+
+    public void displayFirstLevelDiv(MouseEvent actionEvent) {
+
+        try {
+            if (countryCombo2.getValue().toString().equals("U.S")) {
+                firstLevDivCombo.setItems(FirstLevDivDAO.getUsFirstLevDiv());
+            }
+            else if (countryCombo2.getValue().toString().equals("UK")) {
+                firstLevDivCombo.setItems(FirstLevDivDAO.getUkFirstLevDiv());
+            }
+            else if (countryCombo2.getValue().toString().equals("Canada")) {
+                firstLevDivCombo.setItems(FirstLevDivDAO.getCanFirstLevDiv());
+            }
+        }
+        catch(NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setContentText(" Please select Country then select State/Province");
+            alert.showAndWait();
+        }
+
+    }
+
 
     public void onSaveUpdateCustomer(ActionEvent actionEvent) {
     }
+
 
     public void backToDashboard(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
@@ -34,4 +112,6 @@ public class UpdateCustomer implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+
 }

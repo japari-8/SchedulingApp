@@ -48,8 +48,8 @@ public class FirstLevDivDAO {
                 int divId = rs.getInt("Division_ID");
                 String div = rs.getString("Division");
 
-                FirstLevelDivision div1 = new FirstLevelDivision(divId, div);
-                ukRegions.add(div1);
+                FirstLevelDivision div2 = new FirstLevelDivision(divId, div);
+                ukRegions.add(div2);
             }
         }
         catch (SQLException e){
@@ -79,6 +79,28 @@ public class FirstLevDivDAO {
             e.printStackTrace();
         }
         return canProvinces;
+    }
+
+
+    public static FirstLevelDivision getDivision (int divId) {
+        FirstLevelDivision division = null;
+        try {
+            String sql = "SELECT Division_ID, Division FROM first_level_divisions WHERE Division_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, divId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int dId = rs.getInt("Division_ID");
+                String div = rs.getString("Division");
+                division = new FirstLevelDivision(dId, div);
+            }
+            //System.out.println(country);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return division;
     }
 
 }

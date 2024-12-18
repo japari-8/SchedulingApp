@@ -49,8 +49,8 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.rowIndex="2">
                      <children>
-                        <TextField opacity="0.8" prefHeight="35.0" prefWidth="285.0" promptText="State/Province" />
-                        <TextField opacity="0.8" prefHeight="35.0" prefWidth="285.0" promptText="Country" />
+                        <ComboBox fx:id="countryCombo2" opacity="0.5" prefHeight="35.0" prefWidth="285.0" />
+                        <ComboBox fx:id="firstLevDivCombo" onMouseClicked="#displayFirstLevelDiv" opacity="0.5" prefHeight="35.0" prefWidth="285.0" promptText="State/Province" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.rowIndex="3">

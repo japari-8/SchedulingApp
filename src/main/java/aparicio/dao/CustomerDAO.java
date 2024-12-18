@@ -16,7 +16,9 @@ public abstract class CustomerDAO {
         ObservableList<Customer> allCustData = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID, Country FROM customers, countries";
+            String sql = "SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, customers.Division_ID, " +
+                    "countries.Country FROM customers, countries, first_level_divisions WHERE " +
+                    "customers.Division_ID = first_level_divisions.Division_ID AND first_level_divisions.Country_ID = countries.Country_ID";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -40,45 +42,72 @@ public abstract class CustomerDAO {
     }
 
 
+    public static void addCust(String fullName, String address, String postalCode, String phoneNum, int divisionId) {
 
-    public static void addCust(String fullName, String address, String postalCode, String phoneNum, int divisionId)
-            throws SQLException {
-        String sql = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, " +
+        try {
+            String sql = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, " +
                     "Last_Update, Last_Updated_By, Division_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, fullName);
-        ps.setString(2, address);
-        ps.setString(3, postalCode);
-        ps.setString(4, phoneNum);
-        ps.setString(5, null);
-        ps.setString(6, null);
-        ps.setString(7, null);
-        ps.setString(8, null);
-        ps.setInt(9, divisionId);
-        ps.executeUpdate();
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setString(1, fullName);
+            ps.setString(2, address);
+            ps.setString(3, postalCode);
+            ps.setString(4, phoneNum);
+            ps.setString(5, null);
+            ps.setString(6, null);
+            ps.setString(7, null);
+            ps.setString(8, null);
+            ps.setInt(9, divisionId);
+            ps.executeUpdate();
+        }
+        catch (SQLException e) {
+                e.printStackTrace();
+        }
     }
 
-    public static int updateCust(int customerID, String fullName, String address, String postalCode, String phoneNum,
-                                 int divisionId) throws SQLException {
-        String sql = "UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Create_Date = ?, " +
+    public static void updateCust(int customerID, String fullName, String address, String postalCode, String phoneNum,
+                                 int divisionId) {
+        try {
+            String sql = "UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Create_Date = ?, " +
                     "Created_By = ?, Last_Update = ?, Last_Updated_By = ?, Division_ID = ? WHERE Customer_ID = ?";
 
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, fullName);
-        ps.setString(2, address);
-        ps.setString(3, postalCode);
-        ps.setString(4, phoneNum);
-        ps.setString(5, null);
-        ps.setString(6, null);
-        ps.setString(7, null);
-        ps.setString(8, null);
-        ps.setInt(9, divisionId);
-        ps.setInt(10, customerID);
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setString(1, fullName);
+            ps.setString(2, address);
+            ps.setString(3, postalCode);
+            ps.setString(4, phoneNum);
+            ps.setString(5, null);
+            ps.setString(6, null);
+            ps.setString(7, null);
+            ps.setString(8, null);
+            ps.setInt(9, divisionId);
+            ps.setInt(10, customerID);
 
-        ps.executeUpdate();
+            ps.executeUpdate();
 
-        int rowsAffected =ps.executeUpdate();
-        return rowsAffected;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public static void deleteCustomerData(int customerId) {
+
+        try {
+           /* String sql = "Delete from appointments Where Customer_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, customerId);
+            ps.executeUpdate();
+            */
+            String sql1 = "Delete from customers Where Customer_ID = ?";
+            PreparedStatement ps1 = JDBC.connection.prepareStatement(sql1);
+            ps1.setInt(1, customerId);
+            ps1.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
