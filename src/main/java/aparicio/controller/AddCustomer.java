@@ -58,7 +58,7 @@ public class AddCustomer implements Initializable {
         catch(NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Dialog");
-            alert.setContentText(" Please select Country then select State/Province");
+            alert.setContentText("Please select Country then select State/Province");
             alert.showAndWait();
         }
     }

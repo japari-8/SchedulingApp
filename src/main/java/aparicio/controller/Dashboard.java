@@ -2,6 +2,7 @@ package aparicio.controller;
 
 import aparicio.dao.CustomerDAO;
 import aparicio.helper.JDBC;
+import aparicio.model.Appointment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -149,12 +150,27 @@ public class Dashboard implements Initializable {
     }
 
     public void onUpdateAppnt(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/UpdateAppointment.fxml"));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 600, 700);
-        stage.setTitle("Update Appointment Form");
-        stage.setScene(scene);
-        stage.show();
+
+        Appointment appntToUpdate = (Appointment) customerTableView.getSelectionModel().getSelectedItem();
+
+        if (appntToUpdate == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setContentText("Please select an Appointment to update.");
+            alert.showAndWait();
+        }
+        else {
+            //UpdateCustomer.passSelCustomer(custToUpdate);
+
+            Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/UpdateAppointment.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 600, 700);
+            stage.setTitle("Update Appointment Form");
+            stage.setScene(scene);
+            stage.show();
+        }
+
+
     }
 
     public void onDeleteAppnt(ActionEvent actionEvent) {

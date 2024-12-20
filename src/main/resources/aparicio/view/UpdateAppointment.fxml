@@ -53,7 +53,7 @@
                      </padding></Label>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                      <children>
-                        <DatePicker prefHeight="25.0" prefWidth="520.0" />
+                        <DatePicker fx:id="date2" prefHeight="25.0" prefWidth="520.0" />
                      </children>
                   </HBox>
                   <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="205.0" GridPane.rowIndex="2">
@@ -67,8 +67,8 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.rowIndex="3">
                      <children>
-                        <TextField fx:id="UpdateAppntStartTime" prefHeight="50.0" prefWidth="250.0" />
-                        <TextField fx:id="UpdateAppntEndTime" prefHeight="50.0" prefWidth="250.0" />
+                        <ComboBox fx:id="startTimeCombo2" prefHeight="50.0" prefWidth="250.0" />
+                        <ComboBox fx:id="endTimeCombo2" layoutX="173.0" layoutY="10.0" prefHeight="50.0" prefWidth="250.0" />
                      </children>
                   </HBox>
                   <Label text="TITTLE" GridPane.rowIndex="4">
@@ -137,13 +137,13 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.rowIndex="13">
                      <children>
-                        <TextField fx:id="customerId" opacity="0.8" prefHeight="50.0" prefWidth="250.0" />
-                        <TextField fx:id="userId" opacity="0.8" prefHeight="27.0" prefWidth="250.0" />
+                        <ComboBox fx:id="custIdCombo2" prefHeight="50.0" prefWidth="250.0" />
+                        <ComboBox fx:id="userIdCombo2" layoutX="173.0" layoutY="10.0" prefHeight="50.0" prefWidth="250.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="15">
                      <children>
-                        <TextField fx:id="UpdateAppntContact" prefHeight="50.0" prefWidth="520.0" />
+                        <ComboBox fx:id="contactCombo2" prefHeight="50.0" prefWidth="520.0" />
                      </children>
                   </HBox>
                   <Label text="APPOINTMENT ID" GridPane.rowIndex="16">

@@ -67,11 +67,11 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.rowIndex="3">
                      <children>
-                        <TextField fx:id="addAppntStartTime" prefHeight="50.0" prefWidth="250.0" />
-                        <TextField fx:id="addAppntEndTime" prefHeight="50.0" prefWidth="250.0" />
+                        <ComboBox fx:id="startTimeCombo" prefHeight="50.0" prefWidth="250.0" />
+                        <ComboBox fx:id="endTimeCombo1" layoutX="173.0" layoutY="10.0" prefHeight="50.0" prefWidth="250.0" />
                      </children>
                   </HBox>
-                  <Label text="TITLE" GridPane.rowIndex="4">
+                  <Label text="TITTLE" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>

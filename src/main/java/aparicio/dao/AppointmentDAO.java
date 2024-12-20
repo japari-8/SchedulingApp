@@ -12,22 +12,22 @@ import java.util.List;
 
 public abstract class AppointmentDAO {
 
-    public static void addAppointment(int appntId, String title, String descrip, String location, String type, Timestamp startDtTm,
+    public static void addAppointment(String title, String descrip, String location, String type, Timestamp startDtTm,
                                       Timestamp endDtTm, int customerId, int userId, int contactId) {
 
         try {
-            String sql = "INSERT INTO appointments (Appointment_ID, Title, Description, Location, Type, Start, " +
-                    "End, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO appointments (Title, Description, Location, Type, Start, " +
+                    "End, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ps.setInt(1, appntId);
-            ps.setString(2, title);
-            ps.setString(3, descrip);
-            ps.setString(7, location);
+            //ps.setInt(1, appntId);
+            ps.setString(1, title);
+            ps.setString(2, descrip);
+            ps.setString(3, location);
             ps.setString(4, type);
             ps.setTimestamp(5, startDtTm);
             ps.setTimestamp(6, endDtTm);
-            ps.setInt(8, customerId);
-            ps.setInt(9, userId);
+            ps.setInt(7, customerId);
+            ps.setInt(8, userId);
             ps.setInt(9, contactId);
             ps.executeUpdate();
         }
@@ -55,6 +55,9 @@ public abstract class AppointmentDAO {
                 LocalDateTime start1 = start.toLocalDateTime();
                 Timestamp end = rs.getTimestamp("Start");
                 LocalDateTime end1 = end.toLocalDateTime();
+                // Test statement: System.out.println("Timestamp: " + start);
+                // Test statement: System.out.println("LocalDateTime: " + start1);
+
 
                 int custId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");

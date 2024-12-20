@@ -1,5 +1,6 @@
 package aparicio.controller;
 
+import aparicio.dao.AppointmentDAO;
 import aparicio.helper.JDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class Main extends Application {
     @Override
@@ -21,6 +23,10 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws SQLException {
+
+        //TimeZone tm = TimeZone.getTimeZone("America/Los_Angeles");
+        //TimeZone.setDefault(tm);
+        //System.out.println(tm);
 
         //Locale.setDefault(new Locale("fr"));
 

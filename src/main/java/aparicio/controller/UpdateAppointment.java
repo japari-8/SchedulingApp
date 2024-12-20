@@ -11,15 +11,23 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class UpdateAppointment implements Initializable {
 
-    public Label location;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        
+
+        LocalTime startTimeStart = LocalTime.of(8,0);
+        LocalTime startTimeEnd = LocalTime.of(21,0);
+
+        while (startTimeStart.isBefore(startTimeEnd.plusSeconds(1))) {
+            startTimeCombo.getItems().add(startTimeStart);
+            startTimeStart = startTimeStart.plusHours(1);
+        }
 
     }
 
