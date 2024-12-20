@@ -22,6 +22,11 @@ public class FirstLevelDivision {
         return divisionId;
     }
 
+    @Override
+    public int hashCode() {
+        return divisionId;
+    }
+
     public String getDivision() {
         return division;
     }

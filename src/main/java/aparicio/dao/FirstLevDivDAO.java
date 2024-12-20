@@ -95,12 +95,32 @@ public class FirstLevDivDAO {
                 String div = rs.getString("Division");
                 division = new FirstLevelDivision(dId, div);
             }
-            //System.out.println(country);
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
         return division;
+    }
+
+
+    public static FirstLevelDivision getDivisionId (String StateProv) {
+        FirstLevelDivision FLevdiv = null;
+        try {
+            String sql = "SELECT Division_ID, Division FROM first_level_divisions WHERE Division = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setString(1, StateProv);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int dId = rs.getInt("Division_ID");
+                String stateP = rs.getString("Division");
+                FLevdiv = new FirstLevelDivision(dId, stateP);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return FLevdiv;
     }
 
 }

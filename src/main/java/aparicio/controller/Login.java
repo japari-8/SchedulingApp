@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.ZoneId;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -38,8 +39,11 @@ public class Login implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-       tz = TimeZone.getDefault().getDisplayName();
-       loginLocation.setText(tz);
+        ZoneId z = ZoneId.systemDefault();
+        String z1 = z.toString();
+        loginLocation.setText(z1);
+
+        //tz = TimeZone.getDefault().getDisplayName();
 
         ResourceBundle rb = ResourceBundle.getBundle("/aparicio/view/Lan_fr", Locale.getDefault());
 
@@ -58,7 +62,7 @@ public class Login implements Initializable {
     //The following code tests credentials and translated error message
     public void onLogin(ActionEvent actionEvent) throws IOException {
 
-        String uName = userName.getText();
+   /*     String uName = userName.getText();
         String pWord = password.getText();
         boolean auth = false;
 
@@ -69,18 +73,18 @@ public class Login implements Initializable {
             String userPDB = userN.getPassword();
 
             if (uName.equals(userNDB) & pWord.equals(userPDB)) {
-
+    */
                 Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root, 1000, 700);
+                Scene scene = new Scene(root, 1000, 750);
                 stage.setTitle("Dashboard");
                 stage.setScene(scene);
                 stage.show();
-
+    /*
                 auth = true;
             }
         }
-            if (auth = false) {
+            if (auth == false) {
                 ResourceBundle rb2 = ResourceBundle.getBundle("/aparicio/view/Lan_fr", Locale.getDefault());
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Dialog");
@@ -93,7 +97,7 @@ public class Login implements Initializable {
                 }
                 alert.showAndWait();
             }
-
+    */
     }
 
 

@@ -2,8 +2,6 @@ package aparicio.controller;
 
 import aparicio.dao.CustomerDAO;
 import aparicio.helper.JDBC;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,7 +21,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-
+import static aparicio.dao.AppointmentDAO.getAllAppointments;
 
 
 public class Dashboard implements Initializable {
@@ -35,11 +33,12 @@ public class Dashboard implements Initializable {
     public TableColumn postalCodeCol;
     public TableColumn phoneNumCol;
     public TableColumn divisionIdCol;
+    public TableColumn countryCol;
     
     public TableView appntTableView;
     public TableColumn AppntCol;
-    public TableColumn titttleCol;
-    public TableColumn descrptionCol;
+    public TableColumn titleCol;
+    public TableColumn descriptionCol;
     public TableColumn locationCol;
     public TableColumn typeCol;
     public TableColumn startDateTimeCol;
@@ -47,7 +46,7 @@ public class Dashboard implements Initializable {
     public TableColumn customerIdCol2;
     public TableColumn userIdCol;
     public TableColumn contactIdCol;
-    public TableColumn countryCol;
+
 
 
     @Override
@@ -61,6 +60,18 @@ public class Dashboard implements Initializable {
         phoneNumCol.setCellValueFactory(new PropertyValueFactory<>("phoneNum"));
         divisionIdCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
         countryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
+
+        appntTableView.setItems(getAllAppointments());
+        AppntCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        descriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        locationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        startDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("startDateTime"));
+        endDateTimeCol.setCellValueFactory(new PropertyValueFactory<>("endDateTime"));
+        customerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        userIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        contactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
     }
 
@@ -77,15 +88,26 @@ public class Dashboard implements Initializable {
     public void onUpdateCustomer(ActionEvent actionEvent) throws IOException {
 
         Customer custToUpdate = (Customer) customerTableView.getSelectionModel().getSelectedItem();
-        UpdateCustomer.passSelCustomer(custToUpdate);
 
-        Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/UpdateCustomer.fxml"));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 700, 550);
-        stage.setTitle("Update Customer Form");
-        stage.setScene(scene);
-        stage.show();
+        if (custToUpdate == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setContentText("Please select a Customer to update.");
+            alert.showAndWait();
+        }
+        else {
+            UpdateCustomer.passSelCustomer(custToUpdate);
+
+            Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/UpdateCustomer.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 700, 550);
+            stage.setTitle("Update Customer Form");
+            stage.setScene(scene);
+            stage.show();
+        }
+
     }
+
 
     public void onDeleteCustomer(ActionEvent actionEvent) throws IOException {
        Customer cus = (Customer) customerTableView.getSelectionModel().getSelectedItem();
@@ -137,6 +159,15 @@ public class Dashboard implements Initializable {
 
     public void onDeleteAppnt(ActionEvent actionEvent) {
         System.out.println("Delete Appnt button clicked");
+    }
+
+    public void onAllAppntView(ActionEvent actionEvent) {
+    }
+
+    public void onMonthAppntView(ActionEvent actionEvent) {
+    }
+
+    public void onWeekAppntView(ActionEvent actionEvent) {
     }
 
     public void onExit(ActionEvent actionEvent) {

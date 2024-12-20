@@ -31,7 +31,7 @@ public class UpdateAppointment implements Initializable {
     public void backToDashboard(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1000, 700);
+        Scene scene = new Scene(root, 1000, 750);
         stage.setTitle("Dashboard");
         stage.setScene(scene);
         stage.show();

@@ -100,14 +100,30 @@ public class UpdateCustomer implements Initializable {
     }
 
 
-    public void onSaveUpdateCustomer(ActionEvent actionEvent) {
+    public void onSaveUpdateCustomer(ActionEvent actionEvent) throws IOException {
+
+        String fullName = firstNameUpdate.getText() + " " + lastNameUpdate.getText();
+        String address = addressUpdate.getText();
+        String postalCode = postalCodeUpdate.getText();
+        String phoneNum = phoneNumUpdate.getText();
+        int divid = firstLevDivCombo.getSelectionModel().getSelectedItem().hashCode();
+        int custid = Integer.parseInt(updateCustomerId.getText());
+
+        CustomerDAO.updateCust(custid, fullName,address,postalCode, phoneNum, divid);
+
+        Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1000, 750);
+        stage.setTitle("Dashboard");
+        stage.setScene(scene);
+        stage.show();
     }
 
 
     public void backToDashboard(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1000, 700);
+        Scene scene = new Scene(root, 1000, 750);
         stage.setTitle("Dashboard");
         stage.setScene(scene);
         stage.show();

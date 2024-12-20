@@ -6,19 +6,26 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aparicio.controller.Dashboard">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aparicio.controller.Dashboard">
    <children>
-      <VBox alignment="TOP_CENTER" prefHeight="700.0" prefWidth="1000.0">
+      <VBox alignment="TOP_CENTER" prefHeight="375.0" prefWidth="1000.0">
          <children>
-            <Label text="Customers">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-            </Label>
-            <TableView fx:id="customerTableView" prefHeight="200.0" prefWidth="980.0">
+            <HBox prefHeight="46.0" prefWidth="980.0">
+               <children>
+                  <Label text="Customers">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </HBox>
+            <TableView fx:id="customerTableView" prefHeight="250.0" prefWidth="980.0">
               <columns>
                   <TableColumn fx:id="customerIdCol" prefWidth="90.0" text="Customer ID" />
                 <TableColumn fx:id="fullNameCol" prefWidth="160.0" text="Name" />
@@ -29,7 +36,7 @@
                   <TableColumn fx:id="countryCol" prefWidth="100.0" text="Country" />
               </columns>
             </TableView>
-            <HBox alignment="CENTER" prefHeight="45.0" prefWidth="980.0" spacing="20.0">
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="980.0" spacing="20.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#onAddCustomer" prefHeight="25.0" prefWidth="60.0" text="ADD" />
                   <Button mnemonicParsing="false" onAction="#onUpdateCustomer" prefWidth="60.0" text="UPDATE" />
@@ -39,68 +46,101 @@
                   <Insets right="20.0" />
                </padding>
             </HBox>
-            <VBox alignment="TOP_CENTER" prefHeight="397.0" prefWidth="980.0">
-               <children>
-                  <Line endX="876.2929077148438" endY="-1.2426408529281616" startX="-100.0" strokeWidth="0.25" />
-                  <HBox alignment="CENTER" prefHeight="64.0" prefWidth="980.0" spacing="20.0">
-                     <children>
-                        <Label prefHeight="43.0" prefWidth="125.0" text="Appointments">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <padding>
-                              <Insets bottom="10.0" top="6.0" />
-                           </padding>
-                        </Label>
-                        <Label text="View" />
-                        <RadioButton mnemonicParsing="false" text="Monthly" />
-                        <RadioButton mnemonicParsing="false" text="Weekly" />
-                     </children>
-                     <padding>
-                        <Insets top="20.0" />
-                     </padding>
-                  </HBox>
-                  <TableView fx:id="appntTableView" prefHeight="250.0" prefWidth="980.0">
-                    <columns>
-                      <TableColumn fx:id="AppntCol" prefWidth="100.0" text="Appointment ID" />
-                      <TableColumn fx:id="titttleCol" prefWidth="100.0" text="Tittle" />
-                        <TableColumn fx:id="descrptionCol" prefWidth="100.0" text="Description" />
-                        <TableColumn fx:id="locationCol" prefWidth="100.0" text="Location" />
-                        <TableColumn fx:id="typeCol" prefWidth="100.0" text="Type" />
-                        <TableColumn fx:id="startDateTimeCol" prefWidth="127.0" text="Start Date/Time" />
-                        <TableColumn fx:id="endDateTimeCol" prefWidth="128.0" text="End Date/Time" />
-                        <TableColumn fx:id="customerIdCol2" minWidth="0.0" prefWidth="75.0" text="Customer ID" />
-                        <TableColumn fx:id="userIdCol" minWidth="0.0" prefWidth="75.0" text="User Id" />
-                        <TableColumn fx:id="contactIdCol" prefWidth="75.0" text="Contact ID" />
-                    </columns>
-                  </TableView>
-                  <HBox alignment="CENTER" prefHeight="35.0" prefWidth="980.0" spacing="20.0">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#onAddAppnt" prefWidth="60.0" text="ADD" />
-                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onUpdateAppnt" prefWidth="60.0" text="UPDATE" />
-                        <Button layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onAction="#onDeleteAppnt" prefWidth="60.0" text="DELETE" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="980.0" spacing="20.0">
-                     <children>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="RUN REPORT" />
-                        <Button mnemonicParsing="false" onAction="#onExit" prefWidth="60.0" text="EXIT" />
-                     </children>
-                     <padding>
-                        <Insets right="20.0" />
-                     </padding>
-                  </HBox>
-               </children>
-               <padding>
-                  <Insets top="30.0" />
-               </padding>
-            </VBox>
          </children>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+      <VBox alignment="TOP_CENTER" layoutY="373.0" prefHeight="375.0" prefWidth="1000.0">
+         <children>
+            <Line endX="876.2929077148438" endY="-1.2426408529281616" startX="-100.0" strokeWidth="0.25" />
+            <HBox prefHeight="65.0" prefWidth="980.0" spacing="30.0">
+               <children>
+                  <Label prefHeight="43.0" prefWidth="175.0" text="Appointments">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets left="50.0" top="15.0" />
+                     </padding>
+                  </Label>
+                  <Label text="View Appointment Schedules By">
+                     <HBox.margin>
+                        <Insets left="60.0" top="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <RadioButton fx:id="all" mnemonicParsing="false" onAction="#onAllAppntView" selected="true" text="All">
+                     <HBox.margin>
+                        <Insets left="10.0" top="20.0" />
+                     </HBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="toggleGroup" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="month" mnemonicParsing="false" onAction="#onMonthAppntView" text="Month" toggleGroup="$toggleGroup">
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="week" mnemonicParsing="false" onAction="#onWeekAppntView" text="Week" toggleGroup="$toggleGroup">
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                  </RadioButton>
+               </children>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </HBox>
+            <TableView fx:id="appntTableView" prefHeight="240.0" prefWidth="980.0">
+              <columns>
+                <TableColumn fx:id="AppntCol" prefWidth="100.0" text="Appointment ID" />
+                <TableColumn fx:id="titleCol" prefWidth="100.0" text="Tittle" />
+                  <TableColumn fx:id="descriptionCol" prefWidth="100.0" text="Description" />
+                  <TableColumn fx:id="locationCol" prefWidth="100.0" text="Location" />
+                  <TableColumn fx:id="typeCol" prefWidth="100.0" text="Type" />
+                  <TableColumn fx:id="startDateTimeCol" prefWidth="127.0" text="Start Date/Time" />
+                  <TableColumn fx:id="endDateTimeCol" prefWidth="128.0" text="End Date/Time" />
+                  <TableColumn fx:id="customerIdCol2" minWidth="0.0" prefWidth="75.0" text="Customer ID" />
+                  <TableColumn fx:id="userIdCol" minWidth="0.0" prefWidth="75.0" text="User Id" />
+                  <TableColumn fx:id="contactIdCol" prefWidth="75.0" text="Contact ID" />
+              </columns>
+            </TableView>
+            <HBox alignment="CENTER" prefHeight="75.0" prefWidth="1000.0" spacing="20.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onAddAppnt" prefWidth="60.0" text="ADD">
+                     <HBox.margin>
+                        <Insets bottom="20.0" left="340.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onUpdateAppnt" prefWidth="60.0" text="UPDATE">
+                     <HBox.margin>
+                        <Insets bottom="20.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onAction="#onDeleteAppnt" prefWidth="60.0" text="DELETE">
+                     <HBox.margin>
+                        <Insets bottom="20.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="RUN REPORT">
+                     <HBox.margin>
+                        <Insets left="170.0" top="20.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onExit" prefWidth="60.0" text="EXIT">
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" />
          </padding>
       </VBox>
    </children>
