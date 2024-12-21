@@ -81,14 +81,12 @@ public abstract class CustomerDAO {
             ps.setString(8, null);
             ps.setInt(9, divisionId);
             ps.setInt(10, customerID);
-
             ps.executeUpdate();
 
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
 

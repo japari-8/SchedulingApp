@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aparicio.controller.AddAppointment">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aparicio.controller.UpdateAppointment">
    <children>
       <VBox prefHeight="700.0" prefWidth="600.0">
          <children>
@@ -86,7 +86,7 @@
                         <Insets left="30.0" />
                      </padding>
                      <children>
-                        <TextField fx:id="appntId" opacity="0.8" prefHeight="50.0" prefWidth="250.0" promptText="Auto Generated" />
+                        <TextField fx:id="appntId" editable="false" opacity="0.8" prefHeight="50.0" prefWidth="250.0" promptText="Auto Generated" />
                      </children>
                   </HBox>
                   <Label text="CONTACT" GridPane.rowIndex="14">
@@ -103,12 +103,12 @@
                      </padding></Label>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="5">
                      <children>
-                        <TextField fx:id="UpdateAppntTittle" prefHeight="50.0" prefWidth="520.0" />
+                        <TextField fx:id="updateAppntTittle" prefHeight="50.0" prefWidth="520.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="7">
                      <children>
-                        <TextField fx:id="UpdateAppntDescrip" prefHeight="50.0" prefWidth="520.0" />
+                        <TextField fx:id="updateAppntDescrip" prefHeight="50.0" prefWidth="520.0" />
                      </children>
                   </HBox>
                   <Label text="DESCRIPTION" GridPane.rowIndex="6">
@@ -118,12 +118,12 @@
                   </Label>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="9">
                      <children>
-                        <TextField fx:id="UpdateAppntType" prefHeight="50.0" prefWidth="520.0" />
+                        <TextField fx:id="updateAppntType" prefHeight="50.0" prefWidth="520.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="11">
                      <children>
-                        <TextField fx:id="UpdateAppntLocation" prefHeight="50.0" prefWidth="520.0" />
+                        <TextField fx:id="updateAppntLocation" prefHeight="50.0" prefWidth="520.0" />
                      </children>
                   </HBox>
                   <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="192.0" GridPane.rowIndex="12">
@@ -158,7 +158,7 @@
             </GridPane>
             <HBox alignment="CENTER_RIGHT" prefHeight="49.0" prefWidth="600.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onSaveAddAppnt" prefHeight="25.0" prefWidth="75.0" text="SAVE" />
+                  <Button mnemonicParsing="false" onAction="#onSaveUpdateAppnt" prefHeight="25.0" prefWidth="75.0" text="SAVE" />
                   <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#backToDashboard" prefHeight="25.0" prefWidth="75.0" text="CANCEL" />
                </children>
                <padding>

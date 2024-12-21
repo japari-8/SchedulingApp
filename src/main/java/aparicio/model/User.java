@@ -29,6 +29,11 @@ public class User {
         return userId;
     }
 
+    @Override
+    public int hashCode() {
+        return userId;
+    }
+
     public String getUserName() {
         return userName;
     }

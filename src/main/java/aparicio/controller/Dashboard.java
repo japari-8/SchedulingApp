@@ -151,7 +151,8 @@ public class Dashboard implements Initializable {
 
     public void onUpdateAppnt(ActionEvent actionEvent) throws IOException {
 
-        Appointment appntToUpdate = (Appointment) customerTableView.getSelectionModel().getSelectedItem();
+        Appointment appntToUpdate = (Appointment) appntTableView.getSelectionModel().getSelectedItem();
+
 
         if (appntToUpdate == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -160,7 +161,7 @@ public class Dashboard implements Initializable {
             alert.showAndWait();
         }
         else {
-            //UpdateCustomer.passSelCustomer(custToUpdate);
+            UpdateAppointment.passSelAppnt(appntToUpdate);
 
             Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/UpdateAppointment.fxml"));
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

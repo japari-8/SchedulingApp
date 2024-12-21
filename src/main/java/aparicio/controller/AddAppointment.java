@@ -1,6 +1,9 @@
 package aparicio.controller;
 
 import aparicio.dao.AppointmentDAO;
+import aparicio.model.Contact;
+import aparicio.model.Customer;
+import aparicio.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -38,6 +41,7 @@ public class AddAppointment implements Initializable {
     public ComboBox custIdCombo;
     public ComboBox userIdCombo;
     public ComboBox addContactCombo;
+
 
 
     @Override
@@ -90,20 +94,28 @@ public class AddAppointment implements Initializable {
             String descrip = addAppntDescrip.getText();
             String type = addAppntType.getText();
             String location = addAppntLocation.getText();
-            int custId = custIdCombo.getSelectionModel().getSelectedItem().hashCode();
-            int userId = userIdCombo.getSelectionModel().getSelectedItem().hashCode();
 
-            String contactId = addContactCombo.getValue().toString();
+            Integer aCustomer = (Integer) custIdCombo.getSelectionModel().getSelectedItem();
+            int custId = aCustomer;
+
+            Integer aUser = (Integer) userIdCombo.getSelectionModel().getSelectedItem();
+            int userId = aUser;
+
+            Contact aContact = (Contact) addContactCombo.getValue();
+            int aContactId = aContact.getContactId();
+
+            /*String contactN = addContactCombo.getValue().toString();
             int contactID = 0;
-            if (contactId.contains("Anika Costa")) {
+            if (contactN.contains("Anika Costa")) {
                 contactID = 1;
-            } else if (contactId.contains("Daniel Garcia")) {
+            } else if (contactN.contains("Daniel Garcia")) {
                 contactID = 2;
-            } else if (contactId.contains("Li Lee")) {
+            } else if (contactN.contains("Li Lee")) {
                 contactID = 3;
             }
-            System.out.println(contactID);
-            AppointmentDAO.addAppointment(title, descrip, location, type, finalsdt, finaledt, custId, userId, contactID);
+            */
+
+            AppointmentDAO.addAppointment(title, descrip, location, type, finalsdt, finaledt, custId, userId, aContactId);
         }
         catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
