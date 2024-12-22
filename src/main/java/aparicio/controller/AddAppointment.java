@@ -22,11 +22,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
+
+import static java.time.LocalDate.now;
 
 public class AddAppointment implements Initializable {
 
@@ -41,29 +41,48 @@ public class AddAppointment implements Initializable {
     public ComboBox custIdCombo;
     public ComboBox userIdCombo;
     public ComboBox addContactCombo;
-
+    public final ZoneId localZoneId = ZoneId.of(TimeZone.getDefault().getID());
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        LocalTime startTimeStart = LocalTime.of(8,0);
-        LocalTime startTimeEnd = LocalTime.of(21,0);
+        LocalTime easternStartTimeStart = LocalTime.of(8,0);
+        LocalTime easternStartTimeEnd = LocalTime.of(21,0);
 
-        while (startTimeStart.isBefore(startTimeEnd.plusSeconds(1))) {
-            startTimeCombo.getItems().add(startTimeStart);
-            startTimeStart = startTimeStart.plusHours(1);
+        ZoneId easternZoneId = ZoneId.of("America/New_York");
+
+        LocalDateTime ldt = LocalDateTime.of(LocalDate.now(), easternStartTimeStart);
+        ZonedDateTime zdt = ldt.atZone(easternZoneId).withZoneSameInstant(localZoneId);
+        LocalTime lt = zdt.toLocalTime();
+
+        LocalDateTime ldt2 = LocalDateTime.of(LocalDate.now(), easternStartTimeEnd);
+        ZonedDateTime zdt2 = ldt2.atZone(easternZoneId).withZoneSameInstant(localZoneId);
+        LocalTime lt2 = zdt2.toLocalTime();
+
+        while (lt.isBefore(lt2.plusSeconds(1))) {
+            startTimeCombo.getItems().add(lt);
+            lt = lt.plusHours(1);
         }
-        startTimeCombo.getSelectionModel().select(LocalTime.of(8,0));
+        startTimeCombo.getSelectionModel().selectFirst();
 
-        LocalTime endTimeStart = LocalTime.of(9,0);
-        LocalTime endTimeEnd = LocalTime.of(22,0);
 
-        while (endTimeStart.isBefore(endTimeEnd.plusSeconds(1))) {
-            endTimeCombo1.getItems().add(endTimeStart);
-            endTimeStart = endTimeStart.plusHours(1);
+        LocalTime easternEndTimeStart = LocalTime.of(9,0);
+        LocalTime easternEndTimeEnd = LocalTime.of(22,0);
+
+        LocalDateTime ldta = LocalDateTime.of(LocalDate.now(), easternEndTimeStart);
+        ZonedDateTime zdta = ldta.atZone(easternZoneId).withZoneSameInstant(localZoneId);
+        LocalTime lta = zdta.toLocalTime();
+
+        LocalDateTime ldtb = LocalDateTime.of(LocalDate.now(), easternEndTimeEnd);
+        ZonedDateTime zdtb = ldtb.atZone(easternZoneId).withZoneSameInstant(localZoneId);
+        LocalTime ltb = zdtb.toLocalTime();
+
+        while (lta.isBefore(ltb.plusSeconds(1))) {
+            endTimeCombo1.getItems().add(lta);
+            lta = lta.plusHours(1);
         }
-        endTimeCombo1.getSelectionModel().select(LocalTime.of(9,0));
+        endTimeCombo1.getSelectionModel().selectFirst();
 
         custIdCombo.setItems(AppointmentDAO.getAllCustomerIDs());
 
@@ -83,7 +102,14 @@ public class AddAppointment implements Initializable {
             String st = startTimeCombo.getValue().toString();
             LocalTime startTime = LocalTime.parse(st);
             LocalDateTime sdt = LocalDateTime.of(dateChosen, startTime);
+
+            //ZonedDateTime zdt = ZonedDateTime.of(dateChosen, startTime, localZoneId);
+            //Instant zdtInstant = zdt.toInstant();
+
             Timestamp finalsdt = Timestamp.valueOf(sdt);
+
+            //Instant tsInstant = finalsdt.toInstant();
+
 
             String et = endTimeCombo1.getValue().toString();
             LocalTime endTime = LocalTime.parse(et);
@@ -103,17 +129,6 @@ public class AddAppointment implements Initializable {
 
             Contact aContact = (Contact) addContactCombo.getValue();
             int aContactId = aContact.getContactId();
-
-            /*String contactN = addContactCombo.getValue().toString();
-            int contactID = 0;
-            if (contactN.contains("Anika Costa")) {
-                contactID = 1;
-            } else if (contactN.contains("Daniel Garcia")) {
-                contactID = 2;
-            } else if (contactN.contains("Li Lee")) {
-                contactID = 3;
-            }
-            */
 
             AppointmentDAO.addAppointment(title, descrip, location, type, finalsdt, finaledt, custId, userId, aContactId);
         }

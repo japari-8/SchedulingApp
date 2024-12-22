@@ -23,6 +23,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static aparicio.dao.AppointmentDAO.getAllAppointments;
+import static aparicio.dao.CustomerDAO.getAllCustomerData;
 
 
 public class Dashboard implements Initializable {
@@ -53,7 +54,7 @@ public class Dashboard implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        customerTableView.setItems(CustomerDAO.getAllCustomerData());
+        customerTableView.setItems(getAllCustomerData());
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         fullNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));

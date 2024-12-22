@@ -36,14 +36,13 @@ public class Login implements Initializable {
     public Label credentialsLabel;
     public Button logInButton;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         ZoneId z = ZoneId.systemDefault();
         String z1 = z.toString();
         loginLocation.setText(z1);
-
-        //tz = TimeZone.getDefault().getDisplayName();
 
         ResourceBundle rb = ResourceBundle.getBundle("/aparicio/view/Lan_fr", Locale.getDefault());
 
@@ -53,11 +52,9 @@ public class Login implements Initializable {
             userName.setPromptText(rb.getString("username"));
             password.setPromptText(rb.getString("password"));
             logInButton.setText(rb.getString("Login"));
-
         }
-
-
     }
+
 
     //The following code tests credentials and translated error message
     public void onLogin(ActionEvent actionEvent) throws IOException {
