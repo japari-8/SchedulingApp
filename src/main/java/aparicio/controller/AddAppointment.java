@@ -103,18 +103,12 @@ public class AddAppointment implements Initializable {
             String st = startTimeCombo.getValue().toString();
             LocalTime startTime = LocalTime.parse(st);
             LocalDateTime sdt = LocalDateTime.of(dateChosen, startTime);
-
-            //ZonedDateTime zdt = ZonedDateTime.of(dateChosen, startTime, localZoneId);
-            //Instant zdtInstant = zdt.toInstant();
-
-            Timestamp finalsdt = Timestamp.valueOf(sdt);
-
-            //Instant tsInstant = finalsdt.toInstant();
+            //Timestamp finalsdt = Timestamp.valueOf(sdt);
 
             String et = endTimeCombo1.getValue().toString();
             LocalTime endTime = LocalTime.parse(et);
             LocalDateTime edt = LocalDateTime.of(dateChosen, endTime);
-            Timestamp finaledt = Timestamp.valueOf(edt);
+            //Timestamp finaledt = Timestamp.valueOf(edt);
 
             String title = addAppntTittle.getText();
             String descrip = addAppntDescrip.getText();
@@ -130,7 +124,7 @@ public class AddAppointment implements Initializable {
             Contact aContact = (Contact)addContactCombo.getValue();
             int aContactId = aContact.getContactId();
 
-            AppointmentDAO.addAppointment(title, descrip, location, type, finalsdt, finaledt, custId, userId, aContactId);
+            AppointmentDAO.addAppointment(title, descrip, location, type, sdt, edt, custId, userId, aContactId);
         }
         catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

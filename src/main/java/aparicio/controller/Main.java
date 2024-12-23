@@ -24,8 +24,8 @@ public class Main extends Application {
 
     public static void main(String[] args) throws SQLException {
 
-        TimeZone tm = TimeZone.getTimeZone("America/Los_Angeles");
-        TimeZone.setDefault(tm);
+        //TimeZone tm = TimeZone.getTimeZone("America/Los_Angeles");
+        //TimeZone.setDefault(tm);
         //System.out.println(tm);
 
         //Locale.setDefault(new Locale("fr"));

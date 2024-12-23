@@ -12,19 +12,22 @@ import java.util.List;
 
 public abstract class AppointmentDAO {
 
-    public static void addAppointment(String title, String descrip, String location, String type, Timestamp startDtTm,
-                                      Timestamp endDtTm, int customerId, int userId, int contactId) {
+    public static void addAppointment(String title, String descrip, String location, String type, LocalDateTime startDtTm,
+                                      LocalDateTime endDtTm, int customerId, int userId, int contactId) {
         try {
             String sql = "INSERT INTO appointments (Title, Description, Location, Type, Start, " +
                     "End, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
 
+            Timestamp startts = Timestamp.valueOf(startDtTm);
+            Timestamp endts = Timestamp.valueOf(endDtTm);
+
             ps.setString(1, title);
             ps.setString(2, descrip);
             ps.setString(3, location);
             ps.setString(4, type);
-            ps.setTimestamp(5, startDtTm);
-            ps.setTimestamp(6, endDtTm);
+            ps.setTimestamp(5, startts);
+            ps.setTimestamp(6, endts);
             ps.setInt(7, customerId);
             ps.setInt(8, userId);
             ps.setInt(9, contactId);
@@ -100,6 +103,44 @@ public abstract class AppointmentDAO {
     }
 
 
+    public static ObservableList<Appointment> getAppntByCustID(int customId, int appntId) {
+        ObservableList<Appointment> appntList = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID, " +
+                    "Contact_ID FROM appointments WHERE Customer_ID = ? AND Appointment_ID <> ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, customId);
+            ps.setInt(2,appntId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int appId = rs.getInt("Appointment_ID");
+                String title = rs.getString("Title");
+                String descrip = rs.getString("Description");
+                String location = rs.getString("Location");
+                String type = rs.getString("Type");
+
+                Timestamp start = rs.getTimestamp("Start");
+                LocalDateTime start1 = start.toLocalDateTime();
+                Timestamp end = rs.getTimestamp("End");
+                LocalDateTime end1 = end.toLocalDateTime();
+
+                int custId = rs.getInt("Customer_ID");
+                int userId = rs.getInt("User_ID");
+                int contactId = rs.getInt("Contact_ID");
+
+                Appointment appnt = new Appointment(appId, title, descrip, location, type, start1, end1, custId, userId, contactId);
+                appntList.add(appnt);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return appntList;
+    }
+
+
     public static void deleteAppointment (int appointmentId) {
 
         try {
@@ -113,6 +154,8 @@ public abstract class AppointmentDAO {
             e.printStackTrace();
         }
     }
+
+
 
 
     public static ObservableList<Integer> getAllCustomerIDs() {

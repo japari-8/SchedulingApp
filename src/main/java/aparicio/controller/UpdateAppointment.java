@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -111,11 +112,6 @@ public class UpdateAppointment implements Initializable {
     
     public void onSaveUpdateAppnt(ActionEvent actionEvent) throws IOException {
 
-        String upTitle = updateAppntTittle.getText();
-        String upDescription = updateAppntDescrip.getText();
-        String upType = updateAppntType.getText();
-        String upLocation = updateAppntLocation.getText();
-
         LocalDate uDate = date2.getValue();
 
         String ust = startTimeCombo2.getValue().toString();
@@ -125,6 +121,11 @@ public class UpdateAppointment implements Initializable {
         String uet = endTimeCombo2.getValue().toString();
         LocalTime uEndTime = LocalTime.parse(uet);
         LocalDateTime uedt = LocalDateTime.of(uDate, uEndTime);
+
+        String upTitle = updateAppntTittle.getText();
+        String upDescription = updateAppntDescrip.getText();
+        String upType = updateAppntType.getText();
+        String upLocation = updateAppntLocation.getText();
 
         Integer uCustomer = (Integer) custIdCombo2.getSelectionModel().getSelectedItem();
         int uCustId = uCustomer;
@@ -137,14 +138,45 @@ public class UpdateAppointment implements Initializable {
 
         int uAppntId = Integer.parseInt(appntId.getText());
 
-        AppointmentDAO.updateAppointment(upTitle, upDescription, upLocation, upType, usdt, uedt, uCustId, uUserId, uContactId, uAppntId);
+        ObservableList<Appointment> aptList = FXCollections.observableArrayList();
+        aptList = AppointmentDAO.getAppntByCustID(uCustId, uAppntId);
 
-        Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1000, 750);
-        stage.setTitle("Dashboard");
-        stage.setScene(scene);
-        stage.show();
+        boolean overlaps = false;
+        for (Appointment ap : aptList) {
+            LocalDateTime ovSt = ap.getStartDateTime();
+            LocalDateTime ovEt = ap.getEndDateTime();
+
+            if ( (ovSt.isAfter(usdt) || ovSt.isEqual(usdt) ) && ( ovSt.isBefore(uedt)) ) {
+                overlaps = true;
+            }
+            else if ( (ovEt.isAfter(usdt) ) && ( ovEt.isBefore(uedt) || ovEt.isEqual(uedt)) ) {
+                overlaps = true;
+            }
+            else if ( (ovEt.isBefore(usdt) || ovEt.isEqual(usdt) ) && ( ovSt.isAfter(uedt) || ovSt.isEqual(uedt) ) ) {
+                overlaps =true;
+            }
+
+        }
+
+        if (overlaps) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setContentText("The times chosen overlap with another appointment for this customer. Please select a different appointment time.");
+            alert.showAndWait();
+        }
+
+        else {
+            AppointmentDAO.updateAppointment(upTitle, upDescription, upLocation, upType, usdt, uedt, uCustId, uUserId, uContactId, uAppntId);
+
+            Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 1000, 750);
+            stage.setTitle("Dashboard");
+            stage.setScene(scene);
+            stage.show();
+        }
+
+
 
     }
 
