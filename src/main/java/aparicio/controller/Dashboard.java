@@ -1,24 +1,27 @@
 package aparicio.controller;
 
+import aparicio.dao.AppointmentDAO;
 import aparicio.dao.CustomerDAO;
 import aparicio.helper.JDBC;
 import aparicio.model.Appointment;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import aparicio.model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -48,7 +51,9 @@ public class Dashboard implements Initializable {
     public TableColumn customerIdCol2;
     public TableColumn userIdCol;
     public TableColumn contactIdCol;
-
+    public ComboBox monthCombo;
+    public RadioButton month;
+    public Label messageLabel;
 
 
     @Override
@@ -74,6 +79,11 @@ public class Dashboard implements Initializable {
         customerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         userIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
         contactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+
+        ObservableList<Month> months = FXCollections.observableArrayList(Month.JANUARY, Month.FEBRUARY, Month.MARCH,
+                Month.APRIL, Month.MAY, Month.JUNE, Month.JULY, Month.AUGUST, Month.SEPTEMBER, Month.OCTOBER,
+                Month.NOVEMBER, Month.DECEMBER);
+        monthCombo.setItems(months);
 
     }
 
@@ -133,7 +143,7 @@ public class Dashboard implements Initializable {
 
         Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1000, 700);
+        Scene scene = new Scene(root, 1000, 750);
         stage.setTitle("Dashboard");
         stage.setScene(scene);
         stage.show();
@@ -175,17 +185,91 @@ public class Dashboard implements Initializable {
 
     }
 
-    public void onDeleteAppnt(ActionEvent actionEvent) {
-        System.out.println("Delete Appnt button clicked");
+    public void onDeleteAppnt(ActionEvent actionEvent) throws IOException {
+        Appointment appnt = (Appointment) appntTableView.getSelectionModel().getSelectedItem();
+
+        String appntIdAsSt = Integer.toString(appnt.getAppointmentId());
+        String type = appnt.getType();
+
+        if (appnt == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setContentText("Please select an Appointment to delete.");
+            alert.showAndWait();
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This action will permanently delete the Appointment " +
+                    "selected, do you want to continue?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                int appntId = appnt.getAppointmentId();
+                AppointmentDAO.deleteAppointment(appntId);
+
+
+                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                alert2.setTitle("Error Dialog");
+                alert2.setContentText("Appointment ID: " + appntIdAsSt + " of type " + type + " has been deleted.");
+                alert2.showAndWait();
+            }
+        }
+
+        appntTableView.setItems(getAllAppointments());
+        messageLabel.setText("Message: Appointment ID: " + appntIdAsSt + " of type: " + type + " has been deleted.");
     }
 
-    public void onAllAppntView(ActionEvent actionEvent) {
+
+    public void onAllAppntView(ActionEvent actionEvent) throws IOException {
+
+        Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1000, 750);
+        stage.setTitle("Dashboard");
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void onMonthAppntView(ActionEvent actionEvent) {
+    public void onMonthAppntView(ActionEvent actionEvent) throws IOException {
+        ObservableList<Appointment> listByMonth = FXCollections.observableArrayList();
+        Month chMonth = (Month) monthCombo.getSelectionModel().getSelectedItem();
+
+        if (chMonth == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setContentText("Please select a month from the drop down first.");
+            alert.showAndWait();
+
+            Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 1000, 750);
+            stage.setTitle("Dashboard");
+            stage.setScene(scene);
+            stage.show();
+        }
+        else {
+
+            ObservableList<Appointment> allAppntsList = FXCollections.observableArrayList();
+            allAppntsList = getAllAppointments();
+
+            for (Appointment a : allAppntsList) {
+                Month moFromApp = a.getStartDateTime().getMonth();
+
+                //Month chMonth = chmonth.getValue();
+
+                if (chMonth == moFromApp) {
+                    listByMonth.add(a);
+                }
+            }
+            appntTableView.setItems(listByMonth);
+        }
     }
+
 
     public void onWeekAppntView(ActionEvent actionEvent) {
+        Appointment appnt = (Appointment) appntTableView.getSelectionModel().getSelectedItem();
+        DayOfWeek dof = appnt.getStartDateTime().getDayOfWeek();
+        System.out.println(dof);
     }
 
     public void onExit(ActionEvent actionEvent) {

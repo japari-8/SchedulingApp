@@ -46,6 +46,7 @@ public class AddAppointment implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ZoneId localZoneId = ZoneId.of(TimeZone.getDefault().getID());
 
         LocalTime easternStartTimeStart = LocalTime.of(8,0);
         LocalTime easternStartTimeEnd = LocalTime.of(21,0);
@@ -94,7 +95,7 @@ public class AddAppointment implements Initializable {
     }
 
 
-    public void onSaveAddAppnt(ActionEvent actionEvent) {
+    public void onSaveAddAppnt(ActionEvent actionEvent) throws IOException {
 
         try {
             LocalDate dateChosen = date.getValue();
@@ -109,7 +110,6 @@ public class AddAppointment implements Initializable {
             Timestamp finalsdt = Timestamp.valueOf(sdt);
 
             //Instant tsInstant = finalsdt.toInstant();
-
 
             String et = endTimeCombo1.getValue().toString();
             LocalTime endTime = LocalTime.parse(et);
@@ -127,7 +127,7 @@ public class AddAppointment implements Initializable {
             Integer aUser = (Integer) userIdCombo.getSelectionModel().getSelectedItem();
             int userId = aUser;
 
-            Contact aContact = (Contact) addContactCombo.getValue();
+            Contact aContact = (Contact)addContactCombo.getValue();
             int aContactId = aContact.getContactId();
 
             AppointmentDAO.addAppointment(title, descrip, location, type, finalsdt, finaledt, custId, userId, aContactId);
@@ -138,6 +138,12 @@ public class AddAppointment implements Initializable {
             alert.setContentText("Please make a selection in every field");
             alert.showAndWait();
         }
+        Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1000, 750);
+        stage.setTitle("Dashboard");
+        stage.setScene(scene);
+        stage.show();
 
     }
 

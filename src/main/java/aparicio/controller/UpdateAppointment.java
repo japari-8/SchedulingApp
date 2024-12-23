@@ -1,6 +1,7 @@
 package aparicio.controller;
 
 import aparicio.dao.AppointmentDAO;
+import aparicio.dao.ContactDAO;
 import aparicio.model.Appointment;
 import aparicio.model.Contact;
 import aparicio.model.Customer;
@@ -20,10 +21,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 public class UpdateAppointment implements Initializable {
 
@@ -41,7 +41,6 @@ public class UpdateAppointment implements Initializable {
     public TextField appntId;
     public static Appointment selAppointment = null;
 
-
     public static void passSelAppnt(Appointment selAppnt) {
         selAppointment = selAppnt;
     }
@@ -49,22 +48,47 @@ public class UpdateAppointment implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ZoneId localZoneId = ZoneId.of(TimeZone.getDefault().getID());
 
-        LocalTime startTimeStart = LocalTime.of(8,0);
-        LocalTime startTimeEnd = LocalTime.of(21,0);
+        LocalTime easternStartTimeStart = LocalTime.of(8,0);
+        LocalTime easternStartTimeEnd = LocalTime.of(21,0);
 
-        while (startTimeStart.isBefore(startTimeEnd.plusSeconds(1))) {
-            startTimeCombo2.getItems().add(startTimeStart);
-            startTimeStart = startTimeStart.plusHours(1);
+        ZoneId easternZoneId = ZoneId.of("America/New_York");
+
+        LocalDateTime ldt = LocalDateTime.of(LocalDate.now(), easternStartTimeStart);
+        ZonedDateTime zdt = ldt.atZone(easternZoneId).withZoneSameInstant(localZoneId);
+        LocalTime lt = zdt.toLocalTime();
+
+        LocalDateTime ldt2 = LocalDateTime.of(LocalDate.now(), easternStartTimeEnd);
+        ZonedDateTime zdt2 = ldt2.atZone(easternZoneId).withZoneSameInstant(localZoneId);
+        LocalTime lt2 = zdt2.toLocalTime();
+
+        while (lt.isBefore(lt2.plusSeconds(1))) {
+            startTimeCombo2.getItems().add(lt);
+            lt = lt.plusHours(1);
         }
 
-        LocalTime endTimeStart = LocalTime.of(9,0);
-        LocalTime endTimeEnd = LocalTime.of(22,0);
+        LocalTime easternEndTimeStart = LocalTime.of(9,0);
+        LocalTime easternEndTimeEnd = LocalTime.of(22,0);
 
-        while (endTimeStart.isBefore(endTimeEnd.plusSeconds(1))) {
-            endTimeCombo2.getItems().add(endTimeStart);
-            endTimeStart = endTimeStart.plusHours(1);
+        LocalDateTime ldta = LocalDateTime.of(LocalDate.now(), easternEndTimeStart);
+        ZonedDateTime zdta = ldta.atZone(easternZoneId).withZoneSameInstant(localZoneId);
+        LocalTime lta = zdta.toLocalTime();
+
+        LocalDateTime ldtb = LocalDateTime.of(LocalDate.now(), easternEndTimeEnd);
+        ZonedDateTime zdtb = ldtb.atZone(easternZoneId).withZoneSameInstant(localZoneId);
+        LocalTime ltb = zdtb.toLocalTime();
+
+        while (lta.isBefore(ltb.plusSeconds(1))) {
+            endTimeCombo2.getItems().add(lta);
+            lta = lta.plusHours(1);
         }
+        LocalDate ld = selAppointment.getStartDateTime().toLocalDate();
+        LocalTime startT = selAppointment.getStartDateTime().toLocalTime();
+        LocalTime endT = selAppointment.getEndDateTime().toLocalTime();
+        date2.setValue(ld);
+        startTimeCombo2.setValue(startT);
+        endTimeCombo2.setValue(endT);
 
         custIdCombo2.setItems(AppointmentDAO.getAllCustomerIDs());
 
@@ -78,24 +102,14 @@ public class UpdateAppointment implements Initializable {
         updateAppntType.setText(selAppointment.getType());
         updateAppntLocation.setText(selAppointment.getLocation());
         appntId.setText(Integer.toString(selAppointment.getAppointmentId()));
-
-        LocalDate ld = selAppointment.getStartDateTime().toLocalDate();
-        date2.setValue(ld);
-
-        LocalTime lts = selAppointment.getStartDateTime().toLocalTime();
-        startTimeCombo2.setValue(lts);
-
-        LocalTime lte = selAppointment.getEndDateTime().toLocalTime();
-        endTimeCombo2.setValue(lte);
         custIdCombo2.setValue(selAppointment.getCustomerId());
         userIdCombo2.setValue(selAppointment.getUserId());
-        contactCombo2.setValue(selAppointment.getContactId());
 
-
+        contactCombo2.setValue(ContactDAO.getContactById(selAppointment.getContactId()));
     }
 
     
-    public void onSaveUpdateAppnt(ActionEvent actionEvent) {
+    public void onSaveUpdateAppnt(ActionEvent actionEvent) throws IOException {
 
         String upTitle = updateAppntTittle.getText();
         String upDescription = updateAppntDescrip.getText();
@@ -125,7 +139,15 @@ public class UpdateAppointment implements Initializable {
 
         AppointmentDAO.updateAppointment(upTitle, upDescription, upLocation, upType, usdt, uedt, uCustId, uUserId, uContactId, uAppntId);
 
+        Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1000, 750);
+        stage.setTitle("Dashboard");
+        stage.setScene(scene);
+        stage.show();
+
     }
+
 
     public void backToDashboard(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));

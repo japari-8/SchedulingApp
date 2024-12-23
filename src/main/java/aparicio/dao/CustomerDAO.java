@@ -93,12 +93,12 @@ public abstract class CustomerDAO {
     public static void deleteCustomerData(int customerId) {
 
         try {
-           /* String sql = "Delete from appointments Where Customer_ID = ?";
+            String sql = "DELETE FROM appointments WHERE Customer_ID = ?";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setInt(1, customerId);
             ps.executeUpdate();
-            */
-            String sql1 = "Delete from customers Where Customer_ID = ?";
+
+            String sql1 = "DELETE FROM customers WHERE Customer_ID = ?";
             PreparedStatement ps1 = JDBC.connection.prepareStatement(sql1);
             ps1.setInt(1, customerId);
             ps1.executeUpdate();

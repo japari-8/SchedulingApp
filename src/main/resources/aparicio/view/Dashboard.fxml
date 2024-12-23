@@ -57,7 +57,7 @@
       <VBox alignment="TOP_CENTER" layoutY="373.0" prefHeight="375.0" prefWidth="1000.0">
          <children>
             <Line endX="876.2929077148438" endY="-1.2426408529281616" startX="-100.0" strokeWidth="0.25" />
-            <HBox prefHeight="65.0" prefWidth="980.0" spacing="30.0">
+            <HBox prefHeight="65.0" prefWidth="980.0">
                <children>
                   <Label prefHeight="43.0" prefWidth="175.0" text="Appointments">
                      <font>
@@ -74,7 +74,7 @@
                   </Label>
                   <RadioButton fx:id="all" mnemonicParsing="false" onAction="#onAllAppntView" selected="true" text="All">
                      <HBox.margin>
-                        <Insets left="10.0" top="20.0" />
+                        <Insets left="40.0" top="20.0" />
                      </HBox.margin>
                      <toggleGroup>
                         <ToggleGroup fx:id="toggleGroup" />
@@ -82,12 +82,16 @@
                   </RadioButton>
                   <RadioButton fx:id="month" mnemonicParsing="false" onAction="#onMonthAppntView" text="Month" toggleGroup="$toggleGroup">
                      <HBox.margin>
-                        <Insets top="20.0" />
+                        <Insets left="40.0" top="20.0" />
                      </HBox.margin>
                   </RadioButton>
+                  <ComboBox fx:id="monthCombo" prefWidth="50.0">
+                     <HBox.margin>
+                        <Insets left="2.0" top="15.0" />
+                     </HBox.margin></ComboBox>
                   <RadioButton fx:id="week" mnemonicParsing="false" onAction="#onWeekAppntView" text="Week" toggleGroup="$toggleGroup">
                      <HBox.margin>
-                        <Insets top="20.0" />
+                        <Insets left="50.0" top="20.0" />
                      </HBox.margin>
                   </RadioButton>
                </children>
@@ -109,33 +113,53 @@
                   <TableColumn fx:id="contactIdCol" prefWidth="75.0" text="Contact ID" />
               </columns>
             </TableView>
-            <HBox alignment="CENTER" prefHeight="75.0" prefWidth="1000.0" spacing="20.0">
+            <HBox alignment="CENTER" prefHeight="75.0" prefWidth="1000.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onAddAppnt" prefWidth="60.0" text="ADD">
-                     <HBox.margin>
-                        <Insets bottom="20.0" left="340.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onUpdateAppnt" prefWidth="60.0" text="UPDATE">
-                     <HBox.margin>
-                        <Insets bottom="20.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onAction="#onDeleteAppnt" prefWidth="60.0" text="DELETE">
-                     <HBox.margin>
-                        <Insets bottom="20.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="RUN REPORT">
-                     <HBox.margin>
-                        <Insets left="170.0" top="20.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#onExit" prefWidth="60.0" text="EXIT">
-                     <HBox.margin>
-                        <Insets top="20.0" />
-                     </HBox.margin>
-                  </Button>
+                  <HBox prefHeight="100.0" prefWidth="326.0">
+                     <children>
+                        <Label fx:id="messageLabel" maxHeight="200.0" prefHeight="73.0" prefWidth="313.0" wrapText="true">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="326.0" spacing="20.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#onAddAppnt" prefWidth="60.0" text="ADD">
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#onUpdateAppnt" prefWidth="60.0" text="UPDATE">
+                           <HBox.margin>
+                              <Insets bottom="20.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#onDeleteAppnt" prefWidth="60.0" text="DELETE">
+                           <HBox.margin>
+                              <Insets bottom="20.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="40.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="326.0" spacing="20.0">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="RUN REPORT">
+                           <HBox.margin>
+                              <Insets top="20.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#onExit" prefWidth="60.0" text="EXIT">
+                           <HBox.margin>
+                              <Insets top="20.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
             </HBox>
          </children>

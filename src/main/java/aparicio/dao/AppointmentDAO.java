@@ -100,6 +100,21 @@ public abstract class AppointmentDAO {
     }
 
 
+    public static void deleteAppointment (int appointmentId) {
+
+        try {
+            String sql = "Delete from appointments Where Appointment_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, appointmentId);
+            ps.executeUpdate();
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public static ObservableList<Integer> getAllCustomerIDs() {
         ObservableList<Integer> allCustomerIDs = FXCollections.observableArrayList();
 
