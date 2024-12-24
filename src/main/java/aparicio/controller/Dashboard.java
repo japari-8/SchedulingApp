@@ -84,7 +84,6 @@ public class Dashboard implements Initializable {
                 Month.APRIL, Month.MAY, Month.JUNE, Month.JULY, Month.AUGUST, Month.SEPTEMBER, Month.OCTOBER,
                 Month.NOVEMBER, Month.DECEMBER);
         monthCombo.setItems(months);
-
     }
 
 

@@ -1,6 +1,7 @@
 package aparicio.controller;
 
 import aparicio.dao.AppointmentDAO;
+import aparicio.model.Appointment;
 import aparicio.model.Contact;
 import aparicio.model.Customer;
 import aparicio.model.User;
@@ -103,12 +104,10 @@ public class AddAppointment implements Initializable {
             String st = startTimeCombo.getValue().toString();
             LocalTime startTime = LocalTime.parse(st);
             LocalDateTime sdt = LocalDateTime.of(dateChosen, startTime);
-            //Timestamp finalsdt = Timestamp.valueOf(sdt);
 
             String et = endTimeCombo1.getValue().toString();
             LocalTime endTime = LocalTime.parse(et);
             LocalDateTime edt = LocalDateTime.of(dateChosen, endTime);
-            //Timestamp finaledt = Timestamp.valueOf(edt);
 
             String title = addAppntTittle.getText();
             String descrip = addAppntDescrip.getText();
@@ -124,7 +123,44 @@ public class AddAppointment implements Initializable {
             Contact aContact = (Contact)addContactCombo.getValue();
             int aContactId = aContact.getContactId();
 
-            AppointmentDAO.addAppointment(title, descrip, location, type, sdt, edt, custId, userId, aContactId);
+            ObservableList<Appointment> aptList = FXCollections.observableArrayList();
+            aptList = AppointmentDAO.getAppntByCustID(aCustomer);
+
+            boolean overlaps = false;
+            for (Appointment ap : aptList) {
+                LocalDateTime ovSt = ap.getStartDateTime();
+                LocalDateTime ovEt = ap.getEndDateTime();
+
+                if ( (ovSt.isAfter(sdt) || ovSt.isEqual(sdt) ) && ( ovSt.isBefore(edt)) ) {
+                    overlaps = true;
+                }
+                else if ( (ovEt.isAfter(sdt) ) && ( ovEt.isBefore(edt) || ovEt.isEqual(edt)) ) {
+                    overlaps = true;
+                }
+                else if ( (ovEt.isBefore(sdt) || ovEt.isEqual(sdt) ) && ( ovSt.isAfter(edt) || ovSt.isEqual(edt) ) ) {
+                    overlaps =true;
+                }
+
+            }
+
+            if (overlaps) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Dialog");
+                alert.setContentText("The times chosen overlap with another appointment for this customer. Please select a different appointment time.");
+                alert.showAndWait();
+            }
+
+            else {
+
+                AppointmentDAO.addAppointment(title, descrip, location, type, sdt, edt, custId, userId, aContactId);
+
+                Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root, 1000, 750);
+                stage.setTitle("Dashboard");
+                stage.setScene(scene);
+                stage.show();
+            }
         }
         catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -132,12 +168,7 @@ public class AddAppointment implements Initializable {
             alert.setContentText("Please make a selection in every field");
             alert.showAndWait();
         }
-        Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1000, 750);
-        stage.setTitle("Dashboard");
-        stage.setScene(scene);
-        stage.show();
+
 
     }
 

@@ -118,6 +118,12 @@ public class UpdateAppointment implements Initializable {
         LocalTime uStartTime = LocalTime.parse(ust);
         LocalDateTime usdt = LocalDateTime.of(uDate, uStartTime);
 
+        //Next 2 lines prints out zoneddatetime. use the offset to check if UTC time is stored in DB correctly
+        ZonedDateTime zdt = ZonedDateTime.of(usdt, TimeZone.getDefault().toZoneId());
+        System.out.println(zdt);
+
+
+
         String uet = endTimeCombo2.getValue().toString();
         LocalTime uEndTime = LocalTime.parse(uet);
         LocalDateTime uedt = LocalDateTime.of(uDate, uEndTime);
