@@ -49,7 +49,7 @@ public class UpdateAppointment implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ZoneId localZoneId = ZoneId.of(TimeZone.getDefault().getID());
+        ZoneId localZoneId = ZoneId.systemDefault();
 
         LocalTime easternStartTimeStart = LocalTime.of(8,0);
         LocalTime easternStartTimeEnd = LocalTime.of(21,0);
@@ -117,12 +117,6 @@ public class UpdateAppointment implements Initializable {
         String ust = startTimeCombo2.getValue().toString();
         LocalTime uStartTime = LocalTime.parse(ust);
         LocalDateTime usdt = LocalDateTime.of(uDate, uStartTime);
-
-        //Next 2 lines prints out zoneddatetime. use the offset to check if UTC time is stored in DB correctly
-        ZonedDateTime zdt = ZonedDateTime.of(usdt, TimeZone.getDefault().toZoneId());
-        System.out.println(zdt);
-
-
 
         String uet = endTimeCombo2.getValue().toString();
         LocalTime uEndTime = LocalTime.parse(uet);

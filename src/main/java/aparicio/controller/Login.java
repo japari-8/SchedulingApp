@@ -59,7 +59,7 @@ public class Login implements Initializable {
     //The following code tests credentials and translated error message
     public void onLogin(ActionEvent actionEvent) throws IOException {
 
-   /*     String uName = userName.getText();
+        String uName = userName.getText();
         String pWord = password.getText();
         boolean auth = false;
 
@@ -70,14 +70,17 @@ public class Login implements Initializable {
             String userPDB = userN.getPassword();
 
             if (uName.equals(userNDB) & pWord.equals(userPDB)) {
-    */
+
+                User userFromDB = UserDAO.getUserLogedIn(uName, pWord);
+                Dashboard.passLogedUser(userFromDB);
+
                 Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root, 1000, 750);
                 stage.setTitle("Dashboard");
                 stage.setScene(scene);
                 stage.show();
-    /*
+
                 auth = true;
             }
         }
@@ -94,7 +97,7 @@ public class Login implements Initializable {
                 }
                 alert.showAndWait();
             }
-    */
+
     }
 
 

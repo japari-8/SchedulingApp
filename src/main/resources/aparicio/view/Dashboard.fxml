@@ -82,13 +82,9 @@
                   </RadioButton>
                   <RadioButton fx:id="month" mnemonicParsing="false" onAction="#onMonthAppntView" text="Month" toggleGroup="$toggleGroup">
                      <HBox.margin>
-                        <Insets left="40.0" top="20.0" />
+                        <Insets left="55.0" top="20.0" />
                      </HBox.margin>
                   </RadioButton>
-                  <ComboBox fx:id="monthCombo" prefWidth="50.0">
-                     <HBox.margin>
-                        <Insets left="2.0" top="15.0" />
-                     </HBox.margin></ComboBox>
                   <RadioButton fx:id="week" mnemonicParsing="false" onAction="#onWeekAppntView" text="Week" toggleGroup="$toggleGroup">
                      <HBox.margin>
                         <Insets left="50.0" top="20.0" />

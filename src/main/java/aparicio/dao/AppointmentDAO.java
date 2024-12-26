@@ -1,21 +1,16 @@
 package aparicio.dao;
 
 import aparicio.helper.JDBC;
-import aparicio.helper.TimeConversion;
 import aparicio.model.Appointment;
 import aparicio.model.Contact;
+import aparicio.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.TimeZone;
 
-import static aparicio.helper.TimeConversion.utcToLdt;
+
 
 public abstract class AppointmentDAO {
 
@@ -60,28 +55,17 @@ public abstract class AppointmentDAO {
                 String location = rs.getString("Location");
                 String type = rs.getString("Type");
 
-               //ZonedDateTime localZDT = ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault());
-                // Instant localToUtc = localZDT.toInstant();
-                // ZonedDateTime z = localToUtc.atZone(TimeZone.getDefault().toZoneId());
-               // System.out.println(z);
-
                 Timestamp start = rs.getTimestamp("Start");
                 LocalDateTime start1 = start.toLocalDateTime();
-                //System.out.println(start1);
-
-                LocalDateTime start2 = TimeConversion.utcToLdt(start1);
-                //System.out.println(start2);
 
                 Timestamp end = rs.getTimestamp("End");
                 LocalDateTime end1 = end.toLocalDateTime();
-                LocalDateTime end2 = TimeConversion.utcToLdt(end1);
-
 
                 int custId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
                 int contactId = rs.getInt("Contact_ID");
 
-                Appointment appnt = new Appointment(appId, title, descrip, location, type, start2, end2, custId, userId, contactId);
+                Appointment appnt = new Appointment(appId, title, descrip, location, type, start1, end1, custId, userId, contactId);
                 allAppointments.add(appnt);
             }
         }
@@ -198,6 +182,44 @@ public abstract class AppointmentDAO {
     }
 
 
+    public static ObservableList<Appointment> getAppntByUserId(int uId) {
+        ObservableList<Appointment> appntByUId = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID, " +
+                    "Contact_ID FROM appointments WHERE User_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, uId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int appId = rs.getInt("Appointment_ID");
+                String title = rs.getString("Title");
+                String descrip = rs.getString("Description");
+                String location = rs.getString("Location");
+                String type = rs.getString("Type");
+
+                Timestamp start = rs.getTimestamp("Start");
+                LocalDateTime start1 = start.toLocalDateTime();
+                Timestamp end = rs.getTimestamp("End");
+                LocalDateTime end1 = end.toLocalDateTime();
+
+                int custId = rs.getInt("Customer_ID");
+                int userId = rs.getInt("User_ID");
+                int contactId = rs.getInt("Contact_ID");
+
+                Appointment appnt = new Appointment(appId, title, descrip, location, type, start1, end1, custId, userId, contactId);
+                appntByUId.add(appnt);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return appntByUId;
+
+    }
+
+
 
     public static void deleteAppointment (int appointmentId) {
 
@@ -212,8 +234,6 @@ public abstract class AppointmentDAO {
             e.printStackTrace();
         }
     }
-
-
 
 
     public static ObservableList<Integer> getAllCustomerIDs() {
@@ -234,6 +254,7 @@ public abstract class AppointmentDAO {
         }
         return allCustomerIDs;
     }
+
 
     public static ObservableList<Contact> getAllContacts() {
         ObservableList<Contact> allContacts = FXCollections.observableArrayList();

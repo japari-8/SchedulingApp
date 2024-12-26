@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class ContactDAO {
 
     public static Contact getContactById(int contactId) {
-        Contact contactList = null;
+        Contact contact = null;
 
         try {
             String sql = "SELECT Contact_ID, Contact_Name FROM contacts WHERE Contact_ID = ?";
@@ -23,12 +23,12 @@ public class ContactDAO {
             while (rs.next()) {
                 int contactId1 = rs.getInt("Contact_ID");
                 String contactNm = rs.getString("Contact_Name");
-                contactList = new Contact(contactId, contactNm);
+                contact = new Contact(contactId, contactNm);
             }
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
-        return contactList;
+        return contact;
     }
 }

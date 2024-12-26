@@ -4,6 +4,7 @@ import aparicio.dao.AppointmentDAO;
 import aparicio.dao.CustomerDAO;
 import aparicio.helper.JDBC;
 import aparicio.model.Appointment;
+import aparicio.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,7 +28,7 @@ import java.util.ResourceBundle;
 
 import static aparicio.dao.AppointmentDAO.getAllAppointments;
 import static aparicio.dao.CustomerDAO.getAllCustomerData;
-
+import static java.time.YearMonth.now;
 
 public class Dashboard implements Initializable {
 
@@ -54,6 +55,11 @@ public class Dashboard implements Initializable {
     public ComboBox monthCombo;
     public RadioButton month;
     public Label messageLabel;
+    public static User logedInUser;
+
+    public static void passLogedUser(User userLogedIn) {
+        logedInUser = userLogedIn;
+    }
 
 
     @Override
@@ -80,10 +86,27 @@ public class Dashboard implements Initializable {
         userIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
         contactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
-        ObservableList<Month> months = FXCollections.observableArrayList(Month.JANUARY, Month.FEBRUARY, Month.MARCH,
-                Month.APRIL, Month.MAY, Month.JUNE, Month.JULY, Month.AUGUST, Month.SEPTEMBER, Month.OCTOBER,
-                Month.NOVEMBER, Month.DECEMBER);
-        monthCombo.setItems(months);
+        ObservableList<Appointment> apptsByUserList = FXCollections.observableArrayList();
+        apptsByUserList = AppointmentDAO.getAppntByUserId(logedInUser.getUserId());
+
+        LocalDateTime current = LocalDateTime.now();
+        LocalDateTime in15Min = current.plusMinutes(15);
+
+        for (Appointment b : apptsByUserList) {
+            LocalDateTime appntLdt = b.getStartDateTime();
+
+            if ( (appntLdt.isAfter(current) && appntLdt.isBefore(in15Min)) || (appntLdt.isEqual(in15Min)) ){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning Dialog");
+                alert.setContentText("You have an upcoming Appointment. Id: " + b.getAppointmentId() + "Date: "
+                + b.getStartDateTime().toLocalDate() + "Time: " + b.getStartDateTime().toLocalTime());
+                alert.showAndWait();
+            }
+        }
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning Dialog");
+        alert.setContentText("You have No upcoming Appointment.");
+        alert.showAndWait();
     }
 
 
@@ -230,45 +253,43 @@ public class Dashboard implements Initializable {
     }
 
     public void onMonthAppntView(ActionEvent actionEvent) throws IOException {
-        ObservableList<Appointment> listByMonth = FXCollections.observableArrayList();
-        Month chMonth = (Month) monthCombo.getSelectionModel().getSelectedItem();
+        ObservableList<Appointment> allAppts = FXCollections.observableArrayList();
+        allAppts = getAllAppointments();
+        ObservableList<Appointment> aptsForNext30Days = FXCollections.observableArrayList();
 
-        if (chMonth == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error Dialog");
-            alert.setContentText("Please select a month from the drop down first.");
-            alert.showAndWait();
+        LocalDateTime currentLdt = LocalDateTime.now();
+        LocalDateTime ldtIn30Days = currentLdt.plusDays(30);
 
-            Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 1000, 750);
-            stage.setTitle("Dashboard");
-            stage.setScene(scene);
-            stage.show();
-        }
-        else {
+        for (Appointment a : allAppts) {
+            LocalDateTime listLdt = a.getStartDateTime();
 
-            ObservableList<Appointment> allAppntsList = FXCollections.observableArrayList();
-            allAppntsList = getAllAppointments();
-
-            for (Appointment a : allAppntsList) {
-                Month moFromApp = a.getStartDateTime().getMonth();
-
-                //Month chMonth = chmonth.getValue();
-
-                if (chMonth == moFromApp) {
-                    listByMonth.add(a);
-                }
+            if ( (listLdt.isAfter(currentLdt) || listLdt.isEqual(currentLdt) ) &&
+                    ( (listLdt.isBefore(ldtIn30Days) || listLdt.isEqual(ldtIn30Days)) ) ){
+                aptsForNext30Days.add(a);
             }
-            appntTableView.setItems(listByMonth);
         }
+            appntTableView.setItems(aptsForNext30Days);
+
     }
 
-
     public void onWeekAppntView(ActionEvent actionEvent) {
-        Appointment appnt = (Appointment) appntTableView.getSelectionModel().getSelectedItem();
-        DayOfWeek dof = appnt.getStartDateTime().getDayOfWeek();
-        System.out.println(dof);
+        ObservableList<Appointment> allAppts = FXCollections.observableArrayList();
+        allAppts = getAllAppointments();
+        ObservableList<Appointment> aptsForNext7Days = FXCollections.observableArrayList();
+
+        LocalDateTime currentLdt = LocalDateTime.now();
+        LocalDateTime ldtIn7Days = currentLdt.plusDays(7);
+
+        for (Appointment a : allAppts) {
+            LocalDateTime listLdt = a.getStartDateTime();
+
+            if ( (listLdt.isAfter(currentLdt) || listLdt.isEqual(currentLdt) ) &&
+                    ( (listLdt.isBefore(ldtIn7Days) || listLdt.isEqual(ldtIn7Days)) ) ){
+                aptsForNext7Days.add(a);
+            }
+        }
+        appntTableView.setItems(aptsForNext7Days);
+
     }
 
     public void onExit(ActionEvent actionEvent) {

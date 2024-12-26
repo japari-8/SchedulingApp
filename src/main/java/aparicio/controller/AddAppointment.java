@@ -42,15 +42,15 @@ public class AddAppointment implements Initializable {
     public ComboBox custIdCombo;
     public ComboBox userIdCombo;
     public ComboBox addContactCombo;
-    public final ZoneId localZoneId = ZoneId.of(TimeZone.getDefault().getID());
+    //public final ZoneId localZoneId = ZoneId.of(TimeZone.getDefault().getID());
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ZoneId localZoneId = ZoneId.of(TimeZone.getDefault().getID());
+        ZoneId localZoneId = ZoneId.systemDefault();
 
         LocalTime easternStartTimeStart = LocalTime.of(8,0);
-        LocalTime easternStartTimeEnd = LocalTime.of(21,0);
+        LocalTime easternStartTimeEnd = LocalTime.of(20,0);
 
         ZoneId easternZoneId = ZoneId.of("America/New_York");
 
@@ -64,12 +64,12 @@ public class AddAppointment implements Initializable {
 
         while (lt.isBefore(lt2.plusSeconds(1))) {
             startTimeCombo.getItems().add(lt);
-            lt = lt.plusHours(1);
+            lt = lt.plusHours(2);
         }
         startTimeCombo.getSelectionModel().selectFirst();
 
 
-        LocalTime easternEndTimeStart = LocalTime.of(9,0);
+        LocalTime easternEndTimeStart = LocalTime.of(10,0);
         LocalTime easternEndTimeEnd = LocalTime.of(22,0);
 
         LocalDateTime ldta = LocalDateTime.of(LocalDate.now(), easternEndTimeStart);
