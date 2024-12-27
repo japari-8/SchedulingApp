@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -29,6 +30,8 @@ public class Main extends Application {
         //System.out.println(tm);
 
         //Locale.setDefault(new Locale("fr"));
+
+        //System.out.println(LocalDateTime.now());
 
         JDBC.openConnection();
         launch();

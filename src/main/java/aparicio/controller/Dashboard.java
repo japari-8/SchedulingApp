@@ -104,7 +104,7 @@ public class Dashboard implements Initializable {
             }
         }
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Warning Dialog");
+        alert.setTitle("Attention Dialog");
         alert.setContentText("You have No upcoming Appointment.");
         alert.showAndWait();
     }

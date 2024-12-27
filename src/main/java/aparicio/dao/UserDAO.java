@@ -39,17 +39,20 @@ public abstract class UserDAO {
         User user = null;
 
         try {
-            String sql = "SELECT User_ID, User_Name, Password FROM users WHERE User_Name = ? AND Password = ?";
+            String sql = "SELECT users.User_ID, User_Name, Password FROM users WHERE User_Name = ? AND Password = ?";
+                    //"User_Name, Password FROM users WHERE User-Name = ? AND Password = ?";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setString(1, uName);
             ps.setString(2, pWord);
             ResultSet rs = ps.executeQuery();
 
-            int userId = rs.getInt("User_ID");
-            String userN = rs.getString("User_Name");
-            String passW = rs.getString("Password");
+            while (rs.next()) {
+                int userId = rs.getInt("User_ID");
+                String userN = rs.getString("User_Name");
+                String passW = rs.getString("Password");
 
-            user = new User(userId, userN, passW);
+                user = new User(userId, userN, passW);
+            }
         }
         catch (SQLException e) {
             e.printStackTrace();
