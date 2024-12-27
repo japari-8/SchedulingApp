@@ -56,14 +56,46 @@ public class Dashboard implements Initializable {
     public RadioButton month;
     public Label messageLabel;
     public static User logedInUser;
+    private static boolean firstTime = true;
 
     public static void passLogedUser(User userLogedIn) {
         logedInUser = userLogedIn;
     }
 
+    private void setAppointmentAlert() {
+        if (!firstTime) {
+            return;
+        }
+        firstTime = false;
+
+        ObservableList<Appointment> apptsByUserList = FXCollections.observableArrayList();
+        apptsByUserList = AppointmentDAO.getAppntByUserId(logedInUser.getUserId());
+
+        LocalDateTime current = LocalDateTime.now();
+        LocalDateTime in15Min = current.plusMinutes(15);
+
+        for (Appointment b : apptsByUserList) {
+            LocalDateTime appntLdt = b.getStartDateTime();
+
+            if ( (appntLdt.isAfter(current) && appntLdt.isBefore(in15Min)) || (appntLdt.isEqual(in15Min)) ){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning Dialog");
+                alert.setContentText("You have an upcoming Appointment. Id: " + b.getAppointmentId() + "Date: "
+                        + b.getStartDateTime().toLocalDate() + "Time: " + b.getStartDateTime().toLocalTime());
+                alert.showAndWait();
+            }
+        }
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Attention Dialog");
+        alert.setContentText("You have No upcoming Appointment.");
+        alert.showAndWait();
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        setAppointmentAlert();
 
         customerTableView.setItems(getAllCustomerData());
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
@@ -85,28 +117,6 @@ public class Dashboard implements Initializable {
         customerIdCol2.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         userIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
         contactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
-
-        ObservableList<Appointment> apptsByUserList = FXCollections.observableArrayList();
-        apptsByUserList = AppointmentDAO.getAppntByUserId(logedInUser.getUserId());
-
-        LocalDateTime current = LocalDateTime.now();
-        LocalDateTime in15Min = current.plusMinutes(15);
-
-        for (Appointment b : apptsByUserList) {
-            LocalDateTime appntLdt = b.getStartDateTime();
-
-            if ( (appntLdt.isAfter(current) && appntLdt.isBefore(in15Min)) || (appntLdt.isEqual(in15Min)) ){
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning Dialog");
-                alert.setContentText("You have an upcoming Appointment. Id: " + b.getAppointmentId() + "Date: "
-                + b.getStartDateTime().toLocalDate() + "Time: " + b.getStartDateTime().toLocalTime());
-                alert.showAndWait();
-            }
-        }
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Attention Dialog");
-        alert.setContentText("You have No upcoming Appointment.");
-        alert.showAndWait();
     }
 
 

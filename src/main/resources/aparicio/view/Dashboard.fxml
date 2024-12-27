@@ -144,7 +144,7 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="326.0" spacing="20.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="RUN REPORT">
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="RUN REPORTS">
                            <HBox.margin>
                               <Insets top="20.0" />
                            </HBox.margin>
