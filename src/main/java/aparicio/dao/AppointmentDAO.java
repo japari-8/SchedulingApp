@@ -278,4 +278,80 @@ public abstract class AppointmentDAO {
     }
 
 
+    public static ObservableList<String> getAllTypes() {
+        ObservableList<String> allTypes = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT Type FROM appointments";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String type = rs.getString("Type");
+                allTypes.add(type);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allTypes;
+    }
+
+    public static ObservableList<Appointment> getAppntByContactId(int contId) {
+        ObservableList<Appointment> appntByConId = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID, " +
+                    "Contact_ID FROM appointments WHERE appointments.Contact_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, contId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int appId = rs.getInt("Appointment_ID");
+                String title = rs.getString("Title");
+                String descrip = rs.getString("Description");
+                String location = rs.getString("Location");
+                String type = rs.getString("Type");
+
+                Timestamp start = rs.getTimestamp("Start");
+                LocalDateTime start1 = start.toLocalDateTime();
+                Timestamp end = rs.getTimestamp("End");
+                LocalDateTime end1 = end.toLocalDateTime();
+
+                int custId = rs.getInt("Customer_ID");
+                int userId = rs.getInt("User_ID");
+                int contactId = rs.getInt("Contact_ID");
+
+                Appointment appnt = new Appointment(appId, title, descrip, location, type, start1, end1, custId, userId, contactId);
+                appntByConId.add(appnt);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        //System.out.println(appntByConId);
+        return appntByConId;
+    }
+
+
+    public static ObservableList<String> getAllLocations() {
+        ObservableList<String> allLocations = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT Location FROM appointments";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String location = rs.getString("Location");
+                allLocations.add(location);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allLocations;
+    }
+
+
 }

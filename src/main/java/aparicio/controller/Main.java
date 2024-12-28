@@ -31,7 +31,7 @@ public class Main extends Application {
 
         //Locale.setDefault(new Locale("fr"));
 
-        //System.out.println(LocalDateTime.now());
+        System.out.println(LocalDateTime.now());
 
         JDBC.openConnection();
         launch();

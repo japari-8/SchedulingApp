@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aparicio.controller.Reports">
+<AnchorPane prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aparicio.controller.Reports">
    <children>
       <VBox prefHeight="750.0" prefWidth="1000.0">
          <children>
@@ -29,9 +23,10 @@
             </HBox>
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <ComboBox prefWidth="150.0" promptText="month" />
-                  <ComboBox prefWidth="150.0" promptText="type" />
-                  <TextField editable="false" promptText="# of appointments" />
+                  <ComboBox fx:id="monthCombo" prefWidth="150.0" promptText="month" />
+                  <ComboBox fx:id="typeCombo" prefWidth="150.0" promptText="type" />
+                  <TextField fx:id="numOfAppnts" editable="false" promptText="# of appointments" />
+                  <Button mnemonicParsing="false" onAction="#runReport1" text="Run" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="46.0" prefWidth="200.0">
@@ -39,14 +34,15 @@
                   <Label text="Schedule for Contact" />
                </children>
             </HBox>
-            <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0">
+            <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <ComboBox prefWidth="150.0" promptText="Contact" />
+                  <ComboBox fx:id="contactCombo" prefWidth="150.0" promptText="Contact" />
+                  <Button mnemonicParsing="false" onAction="#runReport2" text="Run" />
                </children>
             </HBox>
             <HBox prefHeight="230.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="appntTableView" prefHeight="240.0" prefWidth="980.0">
+                  <TableView fx:id="appntTableView2" prefHeight="240.0" prefWidth="980.0">
                      <columns>
                         <TableColumn fx:id="AppntCol" prefWidth="100.0" text="Appointment ID" />
                         <TableColumn fx:id="titleCol" prefWidth="100.0" text="Tittle" />
@@ -67,14 +63,20 @@
                   <Label text="Total # of appointments in the same location" />
                </children>
             </HBox>
-            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+            <HBox alignment="TOP_CENTER" prefHeight="65.0" prefWidth="979.0" spacing="20.0">
                <children>
-                  <ComboBox prefWidth="150.0" promptText="location" />
-                  <TextField promptText="# of appointments" />
+                  <ComboBox fx:id="locatCombo" prefWidth="150.0" promptText="location" />
+                  <TextField fx:id="numLocAppnts" promptText="# of appointments" />
+                  <Button mnemonicParsing="false" onAction="#runReport3" text="Run" />
                </children>
                <padding>
                   <Insets top="15.0" />
                </padding>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="979.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onCancel" prefWidth="60.0" text="Cancel" />
+               </children>
             </HBox>
          </children>
          <padding>

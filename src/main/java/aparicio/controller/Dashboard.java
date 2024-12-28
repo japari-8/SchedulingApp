@@ -80,8 +80,8 @@ public class Dashboard implements Initializable {
             if ( (appntLdt.isAfter(current) && appntLdt.isBefore(in15Min)) || (appntLdt.isEqual(in15Min)) ){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning Dialog");
-                alert.setContentText("You have an upcoming Appointment. Id: " + b.getAppointmentId() + "Date: "
-                        + b.getStartDateTime().toLocalDate() + "Time: " + b.getStartDateTime().toLocalTime());
+                alert.setContentText("You have an upcoming Appointment. ID: " + b.getAppointmentId() + " Date: "
+                        + b.getStartDateTime().toLocalDate() + " Time: " + b.getStartDateTime().toLocalTime());
                 alert.showAndWait();
             }
         }
@@ -302,9 +302,21 @@ public class Dashboard implements Initializable {
 
     }
 
+
+    public void onRunReport(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Reports.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1000, 750);
+        stage.setTitle("Reports");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
     public void onExit(ActionEvent actionEvent) {
 
         JDBC.closeConnection();
         System.exit(0);
     }
+
 }
