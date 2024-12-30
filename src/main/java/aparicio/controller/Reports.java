@@ -118,7 +118,10 @@ public class Reports implements Initializable {
                 counter2++;
             }
         }
-        numLocAppnts.setText(counter2.toString());
+        String s = counter2.toString();
+        System.out.println(s);
+
+        numLocAppnts.setText(s);
     }
 
 

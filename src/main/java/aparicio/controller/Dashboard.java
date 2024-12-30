@@ -3,6 +3,8 @@ package aparicio.controller;
 import aparicio.dao.AppointmentDAO;
 import aparicio.dao.CustomerDAO;
 import aparicio.helper.JDBC;
+import aparicio.helper.MonthViewInterface;
+import aparicio.helper.WeekViewInterface;
 import aparicio.model.Appointment;
 import aparicio.model.User;
 import javafx.collections.FXCollections;
@@ -73,22 +75,31 @@ public class Dashboard implements Initializable {
 
         LocalDateTime current = LocalDateTime.now();
         LocalDateTime in15Min = current.plusMinutes(15);
+        boolean appntAlert = false;
+        Appointment a = null;
 
         for (Appointment b : apptsByUserList) {
             LocalDateTime appntLdt = b.getStartDateTime();
 
             if ( (appntLdt.isAfter(current) && appntLdt.isBefore(in15Min)) || (appntLdt.isEqual(in15Min)) ){
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning Dialog");
-                alert.setContentText("You have an upcoming Appointment. ID: " + b.getAppointmentId() + " Date: "
-                        + b.getStartDateTime().toLocalDate() + " Time: " + b.getStartDateTime().toLocalTime());
-                alert.showAndWait();
+                appntAlert = true;
+                a = b;
             }
         }
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Attention Dialog");
-        alert.setContentText("You have No upcoming Appointment.");
-        alert.showAndWait();
+
+        if (appntAlert) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setContentText("You have an upcoming Appointment. ID: " + a.getAppointmentId() + " Date: "
+                    + a.getStartDateTime().toLocalDate() + " Time: " + a.getStartDateTime().toLocalTime());
+            alert.showAndWait();
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Attention Dialog");
+            alert.setContentText("You have No upcoming Appointment.");
+            alert.showAndWait();
+        }
     }
 
 
@@ -262,6 +273,7 @@ public class Dashboard implements Initializable {
         stage.show();
     }
 
+    //Multiple statement Lambda Expression
     public void onMonthAppntView(ActionEvent actionEvent) throws IOException {
         ObservableList<Appointment> allAppts = FXCollections.observableArrayList();
         allAppts = getAllAppointments();
@@ -270,18 +282,22 @@ public class Dashboard implements Initializable {
         LocalDateTime currentLdt = LocalDateTime.now();
         LocalDateTime ldtIn30Days = currentLdt.plusDays(30);
 
-        for (Appointment a : allAppts) {
-            LocalDateTime listLdt = a.getStartDateTime();
+        MonthViewInterface listNext30Days = (L1, L2, ldt1, ldt2) -> {
+            for (Appointment a : L1) {
+                LocalDateTime listLdt = a.getStartDateTime();
 
-            if ( (listLdt.isAfter(currentLdt) || listLdt.isEqual(currentLdt) ) &&
-                    ( (listLdt.isBefore(ldtIn30Days) || listLdt.isEqual(ldtIn30Days)) ) ){
-                aptsForNext30Days.add(a);
+                if ( (listLdt.isAfter(ldt1) || listLdt.isEqual(ldt1) ) &&
+                        ( (listLdt.isBefore(ldt2) || listLdt.isEqual(ldt2)) ) ){
+                    L2.add(a);
+                }
             }
-        }
-            appntTableView.setItems(aptsForNext30Days);
-
+            return L2;
+        };
+        appntTableView.setItems(listNext30Days.next30Days(allAppts, aptsForNext30Days, currentLdt, ldtIn30Days));
     }
 
+
+    //Multiple statement Lambda Expression
     public void onWeekAppntView(ActionEvent actionEvent) {
         ObservableList<Appointment> allAppts = FXCollections.observableArrayList();
         allAppts = getAllAppointments();
@@ -290,16 +306,18 @@ public class Dashboard implements Initializable {
         LocalDateTime currentLdt = LocalDateTime.now();
         LocalDateTime ldtIn7Days = currentLdt.plusDays(7);
 
-        for (Appointment a : allAppts) {
-            LocalDateTime listLdt = a.getStartDateTime();
+        WeekViewInterface listNext7Days = (lista, listb, ldta, ldtb) -> {
+            for (Appointment a : lista) {
+                LocalDateTime listLdt = a.getStartDateTime();
 
-            if ( (listLdt.isAfter(currentLdt) || listLdt.isEqual(currentLdt) ) &&
-                    ( (listLdt.isBefore(ldtIn7Days) || listLdt.isEqual(ldtIn7Days)) ) ){
-                aptsForNext7Days.add(a);
+                if ( (listLdt.isAfter(ldta) || listLdt.isEqual(ldta) ) &&
+                        ( (listLdt.isBefore(ldtb) || listLdt.isEqual(ldtb)) ) ){
+                    listb.add(a);
+                }
             }
-        }
-        appntTableView.setItems(aptsForNext7Days);
-
+            return listb;
+        };
+        appntTableView.setItems(listNext7Days.next7Days(allAppts, aptsForNext7Days, currentLdt, ldtIn7Days));
     }
 
 

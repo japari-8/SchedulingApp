@@ -64,7 +64,7 @@ public class AddAppointment implements Initializable {
 
         while (lt.isBefore(lt2.plusSeconds(1))) {
             startTimeCombo.getItems().add(lt);
-            lt = lt.plusHours(2);
+            lt = lt.plusHours(1);
         }
         startTimeCombo.getSelectionModel().selectFirst();
 

@@ -16,9 +16,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
-import java.time.ZoneId;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -59,9 +64,26 @@ public class Login implements Initializable {
     //The following code tests credentials and translated error message
     public void onLogin(ActionEvent actionEvent) throws IOException {
 
+        LocalDateTime ldt = LocalDateTime.now();
+        ZonedDateTime zdt = ZonedDateTime.of(ldt, ZoneId.systemDefault());
+        Instant ldtToUtc = zdt.toInstant();
+
+        String date = String.valueOf(ldtToUtc);
+        String s = String.valueOf(ldtToUtc);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String instToString  = formatter.format(ldtToUtc);
+
+
+
+
         String uName = userName.getText();
         String pWord = password.getText();
         boolean auth = false;
+
+        String filename = "login_activity.txt";
+        FileWriter appendFWriter = new FileWriter(filename, true);
+        PrintWriter outputFile = new PrintWriter(appendFWriter);
 
         Iterator<User> iterator = UserDAO.getAllUsers().iterator();
         while (iterator.hasNext()) {
@@ -69,7 +91,10 @@ public class Login implements Initializable {
             String userNDB = userN.getUserName();
             String userPDB = userN.getPassword();
 
-            if (uName.equals(userNDB) & pWord.equals(userPDB)) {
+            if (uName.equals(userNDB) && pWord.equals(userPDB)) {
+
+                outputFile.println("User " + uName + " successfully logged in at " + ldtToUtc);
+                outputFile.close();
 
                 User userFromDB = UserDAO.getUserLogedIn(uName, pWord);
                 Dashboard.passLogedUser(userFromDB);
@@ -85,6 +110,10 @@ public class Login implements Initializable {
             }
         }
             if (auth == false) {
+
+                outputFile.println("User " + uName + " gave invalid log in at " + instToString);
+                outputFile.close();
+
                 ResourceBundle rb2 = ResourceBundle.getBundle("/aparicio/view/Lan_fr", Locale.getDefault());
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Dialog");
