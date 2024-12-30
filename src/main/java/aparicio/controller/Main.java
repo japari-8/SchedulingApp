@@ -1,19 +1,14 @@
 package aparicio.controller;
 
-import aparicio.dao.AppointmentDAO;
 import aparicio.helper.JDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.Locale;
-import java.util.TimeZone;
 
 public class Main extends Application {
     @Override
@@ -41,8 +36,8 @@ public class Main extends Application {
                 "customers and appointments.");
         outputFile.println("Author: Juan Aparicio   Contact: japari6@wgu.edu");
         outputFile.println("V 0.0.1   Date: 12-23-2024");
-        outputFile.println("IntelliJ Community 2024.1");
-        outputFile.println("Oracle OpenJDK 17.0,10");
+        outputFile.println("IntelliJ Community 2023.2.2");
+        outputFile.println("Java JDK version 17.0.1");
         outputFile.println("JavaFX-SDK-17.0.6");
         outputFile.println("Directions: Launch Scheduling app, login, message will appear for upcoming appointment.");
         outputFile.println("In Dashboard top section displays customers and buttons to add/delete/update customer data.");
@@ -50,7 +45,7 @@ public class Main extends Application {
         outputFile.println("User can filter appointments for the next 30 days or 7 days. Add and delete buttons redirect to forms.");
         outputFile.println("Run Reports button redirects to 3 different type of reports.");
         outputFile.println("Third report filters all appointments by Country.");
-        outputFile.println();
+        outputFile.println("mysql-connector-java-8.0.25");
         outputFile.close();
 
         JDBC.openConnection();
