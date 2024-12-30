@@ -71,8 +71,8 @@ public class Login implements Initializable {
         String date = String.valueOf(ldtToUtc);
         String s = String.valueOf(ldtToUtc);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String instToString  = formatter.format(ldtToUtc);
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        //String instToString  = formatter.format(ldtToUtc);
 
 
 
@@ -93,7 +93,7 @@ public class Login implements Initializable {
 
             if (uName.equals(userNDB) && pWord.equals(userPDB)) {
 
-                outputFile.println("User " + uName + " successfully logged in at " + ldtToUtc);
+                outputFile.println("User " + uName + " successfully logged in at " + s);
                 outputFile.close();
 
                 User userFromDB = UserDAO.getUserLogedIn(uName, pWord);
@@ -111,7 +111,7 @@ public class Login implements Initializable {
         }
             if (auth == false) {
 
-                outputFile.println("User " + uName + " gave invalid log in at " + instToString);
+                outputFile.println("User " + uName + " gave invalid log in at " + s);
                 outputFile.close();
 
                 ResourceBundle rb2 = ResourceBundle.getBundle("/aparicio/view/Lan_fr", Locale.getDefault());
