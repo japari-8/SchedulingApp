@@ -2,6 +2,7 @@ package aparicio.controller;
 
 import aparicio.dao.AppointmentDAO;
 import aparicio.dao.ContactDAO;
+import aparicio.dao.CountryDAO;
 import aparicio.model.Appointment;
 import aparicio.model.Contact;
 import javafx.collections.FXCollections;
@@ -128,7 +129,6 @@ public class Reports implements Initializable {
             }
         }
         String s = counter2.toString();
-        System.out.println(s);
 
         numLocAppnts.setText(s);
     }

@@ -68,15 +68,15 @@ public class Login implements Initializable {
      * It also displays error messages if credentials are incorrect*/
     public void onLogin(ActionEvent actionEvent) throws IOException {
 
-        LocalDateTime ldt = LocalDateTime.now();
-        ZonedDateTime zdt = ZonedDateTime.of(ldt, ZoneId.systemDefault());
-        Instant ldtToUtc = zdt.toInstant();
+        //LocalDateTime ldt = LocalDateTime.now();
+        ZonedDateTime zdt = ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault());
+        ZonedDateTime utcNow = zdt.withZoneSameInstant(ZoneId.of("UTC"));
 
-        String date = String.valueOf(ldtToUtc);
-        String s = String.valueOf(ldtToUtc);
+        //String date = String.valueOf(ldtToUtc);
+        //String s = String.valueOf(ldtToUtc);
 
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        //String instToString  = formatter.format(ldtToUtc);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.nnnnn z");
+        String instToString  = formatter.format(utcNow);
 
 
 
@@ -96,7 +96,7 @@ public class Login implements Initializable {
 
             if (uName.equals(userNDB) && pWord.equals(userPDB)) {
 
-                outputFile.println("User " + uName + " successfully logged in at " + s);
+                outputFile.println("User " + uName + " successfully logged in at " + instToString);
                 outputFile.close();
 
                 User userFromDB = UserDAO.getUserLogedIn(uName, pWord);
@@ -114,7 +114,7 @@ public class Login implements Initializable {
         }
             if (auth == false) {
 
-                outputFile.println("User " + uName + " gave invalid log in at " + s);
+                outputFile.println("User " + uName + " gave invalid log in at " + instToString);
                 outputFile.close();
 
                 ResourceBundle rb2 = ResourceBundle.getBundle("/aparicio/view/Lan_fr", Locale.getDefault());

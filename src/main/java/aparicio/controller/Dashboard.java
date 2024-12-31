@@ -285,9 +285,11 @@ public class Dashboard implements Initializable {
         stage.show();
     }
 
-    /**This method is called when the Month radio button is clicked. It uses a multiple statement lambda expression to filter out
-     * appointments in the next 30 days and sets the tableview with these appointments*/
-    public void onMonthAppntView(ActionEvent actionEvent) throws IOException {
+    /**This method is  lambda #1 and is called when the Month radio button is clicked. It uses a multiple statement
+     * lambda expression to filter out appointments in the next 30 days and sets the tableview with these appointments
+     * @param actionEvent Month radio button clicked
+     */
+    public void onMonthAppntView(ActionEvent actionEvent) {
         ObservableList<Appointment> allAppts = FXCollections.observableArrayList();
         allAppts = getAllAppointments();
         ObservableList<Appointment> aptsForNext30Days = FXCollections.observableArrayList();
@@ -310,8 +312,10 @@ public class Dashboard implements Initializable {
     }
 
 
-    /**This method is called when the Week radio button is clicked. It uses a multiple statement lambda expression to filter out
-     * appointments in the next 7 days and sets the tableview with these appointments*/
+    /**This method is lambda #2 and is called when the Week radio button is clicked. It uses a multiple statement lambda expression to filter out
+     * appointments in the next 7 days and sets the tableview with these appointments
+     * @param actionEvent Week radio button clicked
+     */
     public void onWeekAppntView(ActionEvent actionEvent) {
         ObservableList<Appointment> allAppts = FXCollections.observableArrayList();
         allAppts = getAllAppointments();
