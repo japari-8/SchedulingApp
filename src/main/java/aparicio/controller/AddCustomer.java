@@ -22,8 +22,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-//import static javafx.scene.control.skin.TableSkinUtils.getSelectionModel;
-
+/** This class adds a customer to the database.*/
 public class AddCustomer implements Initializable {
 
     public TextField firstNameAdd;
@@ -35,6 +34,8 @@ public class AddCustomer implements Initializable {
     public ComboBox<Country> countryCombo;
     public ComboBox<FirstLevelDivision> firstLevDivCombo;
 
+
+    /**This method initializes the country combo box.*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -42,6 +43,7 @@ public class AddCustomer implements Initializable {
 
     }
 
+    /**This method sets the first level division combo box. Displays only the divisions by selected country.*/
     public void displayFirstLevDiv(MouseEvent mouseEvent) {
 
         try {
@@ -63,26 +65,36 @@ public class AddCustomer implements Initializable {
         }
     }
 
+    /**This method is called when the Save button is clicked. It saves the customer data, has validation checks for
+     * empty fields.*/
+    public void onSaveAddCustomer(ActionEvent actionEvent) throws IOException {
 
-    public void onSaveAddCustomer(ActionEvent actionEvent) throws SQLException, IOException {
+        try {
+            String fullName = firstNameAdd.getText() + " " + lastNameAdd.getText();
+            String address = addressAdd.getText();
+            String postalCode = postalCodeAdd.getText();
+            String phoneNum = phoneNumAdd.getText();
+            int divID = firstLevDivCombo.getSelectionModel().getSelectedItem().getDivisionId();
 
-        String fullName = firstNameAdd.getText() + " " + lastNameAdd.getText();
-        String address = addressAdd.getText();
-        String postalCode = postalCodeAdd.getText();
-        String phoneNum = phoneNumAdd.getText();
-        int divID = firstLevDivCombo.getSelectionModel().getSelectedItem().getDivisionId();
+            CustomerDAO.addCust(fullName, address, postalCode, phoneNum, divID);
 
-        CustomerDAO.addCust(fullName, address, postalCode, phoneNum, divID);
-
-        Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1000, 750);
-        stage.setTitle("Dashboard");
-        stage.setScene(scene);
-        stage.show();
+            Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 1000, 750);
+            stage.setTitle("Dashboard");
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setContentText("Please make a selection in every field");
+            alert.showAndWait();
+        }
     }
 
-
+    /**This method is called when the Cancel button is clicked. It cancels the
+     * add customer request and redirects to the Dashboard screen.*/
     public void backToDashboard(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

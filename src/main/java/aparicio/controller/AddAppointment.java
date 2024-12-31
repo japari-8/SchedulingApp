@@ -1,6 +1,8 @@
 package aparicio.controller;
 
 import aparicio.dao.AppointmentDAO;
+import aparicio.dao.ContactDAO;
+import aparicio.dao.CustomerDAO;
 import aparicio.model.Appointment;
 import aparicio.model.Contact;
 import aparicio.model.Customer;
@@ -29,8 +31,8 @@ import java.util.TimeZone;
 
 import static java.time.LocalDate.now;
 
+/** This class adds an appointment to the database.*/
 public class AddAppointment implements Initializable {
-
 
     public DatePicker date;
     public ComboBox startTimeCombo;
@@ -42,9 +44,11 @@ public class AddAppointment implements Initializable {
     public ComboBox custIdCombo;
     public ComboBox userIdCombo;
     public ComboBox addContactCombo;
-    //public final ZoneId localZoneId = ZoneId.of(TimeZone.getDefault().getID());
 
 
+    /**This method initializes all the combo boxes. It sets the appointment start and end time options to 1 hour increments.
+     * These times are translated to local hours from the eastern time operational hours of 8am to 10pm. Customer, User,
+     * and Contact combo boxes are also initiated*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ZoneId localZoneId = ZoneId.systemDefault();
@@ -86,16 +90,17 @@ public class AddAppointment implements Initializable {
         }
         endTimeCombo1.getSelectionModel().selectFirst();
 
-        custIdCombo.setItems(AppointmentDAO.getAllCustomerIDs());
+        custIdCombo.setItems(CustomerDAO.getAllCustomerIDs());
 
         ObservableList<Integer> userList = FXCollections.observableArrayList(1, 2);
         userIdCombo.setItems(userList);
 
-       addContactCombo.setItems(AppointmentDAO.getAllContacts());
+       addContactCombo.setItems(ContactDAO.getAllContacts());
 
     }
 
-
+    /**This method is called when the Save button is clicked. It saves the appointment data, has validation checks for
+     * empty fields. Also alerts the user if the appointment overlaps with another appointment.*/
     public void onSaveAddAppnt(ActionEvent actionEvent) throws IOException {
 
         try {
@@ -120,7 +125,7 @@ public class AddAppointment implements Initializable {
             Integer aUser = (Integer) userIdCombo.getSelectionModel().getSelectedItem();
             int userId = aUser;
 
-            Contact aContact = (Contact)addContactCombo.getValue();
+            Contact aContact = (Contact) addContactCombo.getValue();
             int aContactId = aContact.getContactId();
 
             ObservableList<Appointment> aptList = FXCollections.observableArrayList();
@@ -131,13 +136,16 @@ public class AddAppointment implements Initializable {
                 LocalDateTime ovSt = ap.getStartDateTime();
                 LocalDateTime ovEt = ap.getEndDateTime();
 
-                if ( (ovSt.isAfter(sdt) || ovSt.isEqual(sdt) ) && ( ovSt.isBefore(edt)) ) {
+                if ( (ovSt.isAfter(sdt) || ovSt.isEqual(sdt) ) && ( ovEt.isBefore(edt) || ovEt.isEqual(edt)) ) {
                     overlaps = true;
                 }
-                else if ( (ovEt.isAfter(sdt) ) && ( ovEt.isBefore(edt) || ovEt.isEqual(edt)) ) {
+                else if ( (ovSt.isBefore(sdt) ) && ( ovEt.isBefore(edt) || ovEt.isEqual(edt)) ) {
                     overlaps = true;
                 }
-                else if ( (ovEt.isBefore(sdt) || ovEt.isEqual(sdt) ) && ( ovSt.isAfter(edt) || ovSt.isEqual(edt) ) ) {
+                else if ( (ovSt.isAfter(sdt) || ovSt.isEqual(sdt) ) && ovEt.isAfter(edt) ) {
+                    overlaps = true;
+                }
+                else if ( (ovSt.isBefore(sdt) || ovSt.isEqual(sdt) ) && ( ovEt.isAfter(edt) || ovEt.isEqual(edt)) ) {
                     overlaps =true;
                 }
 
@@ -148,9 +156,7 @@ public class AddAppointment implements Initializable {
                 alert.setTitle("Error Dialog");
                 alert.setContentText("The times chosen overlap with another appointment for this customer. Please select a different appointment time.");
                 alert.showAndWait();
-            }
-
-            else {
+            } else {
 
                 AppointmentDAO.addAppointment(title, descrip, location, type, sdt, edt, custId, userId, aContactId);
 
@@ -161,18 +167,16 @@ public class AddAppointment implements Initializable {
                 stage.setScene(scene);
                 stage.show();
             }
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Dialog");
             alert.setContentText("Please make a selection in every field");
             alert.showAndWait();
         }
-
-
     }
 
-
+    /**This method is called when the Cancel button is clicked. It cancels the
+     * add appointment request and redirects to the Dashboard screen.*/
     public void backToDashboard(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

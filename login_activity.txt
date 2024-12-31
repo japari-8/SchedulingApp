@@ -18,3 +18,12 @@ User  gave invalid log in at 2024-12-30T15:23:26.906978800Z
 User test successfully logged in at 2024-12-30T15:32:46.506797200Z
 User  gave invalid log in at 2024-12-30T15:53:34.877565Z
 User  gave invalid log in at 2024-12-30T15:56:38.111084500Z
+User test successfully logged in at 2024-12-30T19:55:21.063861100Z
+User test successfully logged in at 2024-12-30T22:35:50.195321300Z
+User admin successfully logged in at 2024-12-31T00:53:06.520584Z
+User test successfully logged in at 2024-12-31T01:07:05.774812100Z
+User test successfully logged in at 2024-12-31T01:25:40.765258900Z
+User admin successfully logged in at 2024-12-31T01:44:26.209816400Z
+User admin successfully logged in at 2024-12-31T05:40:59.017873500Z
+User test successfully logged in at 2024-12-31T05:43:50.851451500Z
+User admin successfully logged in at 2024-12-31T06:42:42.979847800Z

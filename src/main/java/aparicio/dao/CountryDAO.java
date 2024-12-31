@@ -9,8 +9,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
+/** This class is used to only Read countries from the database.*/
 public abstract class CountryDAO {
 
+    /**This method is called when a list of all countries needs to be created. It requests a list of all available
+     * countries in the database.
+     * @return a list of all countries
+     * */
     public static ObservableList<Country> getAllCountries() {
 
         ObservableList<Country> allCountries = FXCollections.observableArrayList();
@@ -35,7 +41,4 @@ public abstract class CountryDAO {
         }
         return allCountries;
     }
-
-
-
 }

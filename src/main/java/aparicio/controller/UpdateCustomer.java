@@ -17,13 +17,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import aparicio.model.Country;
 import aparicio.model.FirstLevelDivision;
-
-//import static javafx.scene.control.skin.TableSkinUtils.getSelectionModel;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/** This class lets a user update a customer.*/
 public class UpdateCustomer implements Initializable {
 
     private static Customer selCustomer = null;
@@ -36,12 +34,13 @@ public class UpdateCustomer implements Initializable {
     public ComboBox countryCombo2;
     public ComboBox firstLevDivCombo;
 
+    /**This method receives a customer to update. */
     public static void passSelCustomer(Customer selCust) {
        selCustomer = selCust;
-
    }
 
-
+    /**This method initializes the country and first level division combo boxes. This method also populate all the fields
+     * with the customer data received.*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -76,7 +75,7 @@ public class UpdateCustomer implements Initializable {
 
     }
 
-
+    /**This method changes the first level division combo box options based on the user's country selection. */
     public void displayFirstLevelDiv(MouseEvent actionEvent) {
 
         try {
@@ -99,27 +98,37 @@ public class UpdateCustomer implements Initializable {
 
     }
 
-
+    /**This method is called when the Save button is clicked. It saves the updated customer data and has validation checks for
+     * empty fields.*/
     public void onSaveUpdateCustomer(ActionEvent actionEvent) throws IOException {
 
-        String fullName = firstNameUpdate.getText() + " " + lastNameUpdate.getText();
-        String address = addressUpdate.getText();
-        String postalCode = postalCodeUpdate.getText();
-        String phoneNum = phoneNumUpdate.getText();
-        int divid = firstLevDivCombo.getSelectionModel().getSelectedItem().hashCode();
-        int custid = Integer.parseInt(updateCustomerId.getText());
+        try {
+            String fullName = firstNameUpdate.getText() + " " + lastNameUpdate.getText();
+            String address = addressUpdate.getText();
+            String postalCode = postalCodeUpdate.getText();
+            String phoneNum = phoneNumUpdate.getText();
+            int divid = firstLevDivCombo.getSelectionModel().getSelectedItem().hashCode();
+            int custid = Integer.parseInt(updateCustomerId.getText());
 
-        CustomerDAO.updateCust(custid, fullName,address,postalCode, phoneNum, divid);
+            CustomerDAO.updateCust(custid, fullName,address,postalCode, phoneNum, divid);
 
-        Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1000, 750);
-        stage.setTitle("Dashboard");
-        stage.setScene(scene);
-        stage.show();
+            Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 1000, 750);
+            stage.setTitle("Dashboard");
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setContentText("Please make a selection in every field");
+            alert.showAndWait();
+        }
     }
 
-
+    /**This method is called when the Cancel button is clicked. It cancels the
+     * update customer request and redirects to the Dashboard screen.*/
     public void backToDashboard(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

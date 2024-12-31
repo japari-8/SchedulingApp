@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"aparicio.schedulingapp","l":"aparicio.controller"},{"m":"aparicio.schedulingapp","l":"aparicio.dao"},{"m":"aparicio.schedulingapp","l":"aparicio.helper"},{"m":"aparicio.schedulingapp","l":"aparicio.model"}];updateSearchResults();

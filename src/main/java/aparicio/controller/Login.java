@@ -31,6 +31,8 @@ import java.util.TimeZone;
 
 import static java.util.Locale.getDefault;
 
+/** This class creates the Login page for the Scheduling Application.
+ * Contains user and password textfields, authenticates, and redirects to Dashboard.*/
 public class Login implements Initializable {
 
     public TextField userName;
@@ -41,7 +43,8 @@ public class Login implements Initializable {
     public Label credentialsLabel;
     public Button logInButton;
 
-
+    /**This method initializes the login page.
+     * It uses a ResourceBundle to translate the Login page to French if the user's default language is set to French.*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -61,7 +64,8 @@ public class Login implements Initializable {
     }
 
 
-    //The following code tests credentials and translated error message
+    /**This method authenticates the user and creates a login attempt.
+     * It also displays error messages if credentials are incorrect*/
     public void onLogin(ActionEvent actionEvent) throws IOException {
 
         LocalDateTime ldt = LocalDateTime.now();
@@ -73,7 +77,6 @@ public class Login implements Initializable {
 
         //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         //String instToString  = formatter.format(ldtToUtc);
-
 
 
 

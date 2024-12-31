@@ -10,7 +10,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
+/** This class creates an application for a Desktop Scheduling System.*/
 public class Main extends Application {
+
+    /**This is the first method that is called. This method loads the Login screen.*/
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/aparicio/view/Login.fxml"));
@@ -20,8 +23,11 @@ public class Main extends Application {
         stage.show();
     }
 
+    /** This method is the main method. This method launches the Login page.
+     * It creates a README.txt file for app information.
+     * Also opens and closes the JDBC connection.*/
     public static void main(String[] args) throws SQLException, IOException {
-        System.out.println(System.getProperty("javafx.version"));
+
         //TimeZone tm = TimeZone.getTimeZone("America/Los_Angeles");
         //TimeZone.setDefault(tm);
         //System.out.println(tm);
@@ -29,7 +35,6 @@ public class Main extends Application {
         //Locale.setDefault(new Locale("fr"));
 
         String filename2 = "README.txt";
-        //FileWriter appendFWriter2 = new FileWriter(filename2, true);
         PrintWriter outputFile = new PrintWriter(filename2);
         outputFile.println("Title: Scheduling App");
         outputFile.println("Purpose: GUI based scheduling desktop application that allows users to Add, update, and delete " +

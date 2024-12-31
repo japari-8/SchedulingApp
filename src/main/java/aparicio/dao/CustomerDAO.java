@@ -9,9 +9,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
+/** This class is used to Create, Read, Update, or Delete customers from the database.*/
 public abstract class CustomerDAO {
 
-
+    /**This method is called when a list of all customers needs to be created. It requests a list of all available
+     * customers in the database.
+     * @return a list of all customers
+     * */
     public static ObservableList<Customer> getAllCustomerData() {
         ObservableList<Customer> allCustData = FXCollections.observableArrayList();
 
@@ -41,7 +46,14 @@ public abstract class CustomerDAO {
         return allCustData;
     }
 
-
+    /**This method is called when a customer needs to be created in the database. It takes arguments to create a customer
+     * and saves to the database.
+     * @param fullName the customer name
+     * @param address the customer address
+     * @param postalCode the customer postal code
+     * @param phoneNum the customer phone number
+     * @param divisionId the customer division ID
+     */
     public static void addCust(String fullName, String address, String postalCode, String phoneNum, int divisionId) {
 
         try {
@@ -64,6 +76,14 @@ public abstract class CustomerDAO {
         }
     }
 
+    /**This method is called when an appointment needs to be updated.
+     * @param  customerID the customer ID
+     * @param fullName the customer name
+     * @param address the customer address
+     * @param postalCode the customer postal code
+     * @param phoneNum the customer phone number
+     * @param divisionId the customer division ID
+     */
     public static void updateCust(int customerID, String fullName, String address, String postalCode, String phoneNum,
                                  int divisionId) {
         try {
@@ -89,7 +109,9 @@ public abstract class CustomerDAO {
         }
     }
 
-
+    /**This method is called when a customer needs to be deleted from the database.
+     * @param customerId the customer ID to match for deletion
+     * */
     public static void deleteCustomerData(int customerId) {
 
         try {
@@ -106,6 +128,28 @@ public abstract class CustomerDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    /**This method is used to get a list of customer ID's from the customers table in the database.
+     * @return a list of customers ID's
+     * */
+    public static ObservableList<Integer> getAllCustomerIDs() {
+        ObservableList<Integer> allCustomerIDs = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT Customer_ID FROM customers";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int cusId = rs.getInt("Customer_ID");
+                allCustomerIDs.add(cusId);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allCustomerIDs;
     }
 
 

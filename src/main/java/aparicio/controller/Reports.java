@@ -1,6 +1,7 @@
 package aparicio.controller;
 
 import aparicio.dao.AppointmentDAO;
+import aparicio.dao.ContactDAO;
 import aparicio.model.Appointment;
 import aparicio.model.Contact;
 import javafx.collections.FXCollections;
@@ -23,6 +24,7 @@ import java.net.URL;
 import java.time.Month;
 import java.util.ResourceBundle;
 
+/** This class creates reports.*/
 public class Reports implements Initializable {
 
 
@@ -47,12 +49,13 @@ public class Reports implements Initializable {
             Month.APRIL, Month.MAY, Month.JUNE, Month.JULY, Month.AUGUST, Month.SEPTEMBER, Month.OCTOBER, Month.NOVEMBER,
             Month.DECEMBER);
 
+    /**This method initializes all combo boxes. Month, type, and contact. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         monthCombo.setItems(months);
         typeCombo.setItems(AppointmentDAO.getAllTypes());
-        contactCombo.setItems(AppointmentDAO.getAllContacts());
+        contactCombo.setItems(ContactDAO.getAllContacts());
 
         AppntCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -69,7 +72,8 @@ public class Reports implements Initializable {
 
     }
 
-
+    /**This method is called when the Run button on the first report is clicked. It counts the number of customer
+     * appointments by type and month, and displays in a textfield.*/
     public void runReport1(ActionEvent actionEvent) {
 
         Integer counter = 0;
@@ -90,6 +94,9 @@ public class Reports implements Initializable {
         numOfAppnts.setText(counter.toString());
     }
 
+
+    /**This method is called when the Run button on the second report is clicked. It displays a schedule of appointments
+     * by contact.*/
     public void runReport2(ActionEvent actionEvent) {
 
         Contact con = (Contact)contactCombo.getValue();
@@ -103,6 +110,8 @@ public class Reports implements Initializable {
     }
 
 
+    /**This method is called when the Run button on the third report is clicked. It displays the total number of appointments
+     * in the same location.*/
     public void runReport3(ActionEvent actionEvent) {
 
         Integer counter2 = 0;
@@ -124,7 +133,7 @@ public class Reports implements Initializable {
         numLocAppnts.setText(s);
     }
 
-
+    /**This method is called when the Cancel button is clicked. It redirects to the Dashboard screen.*/
     public void onCancel(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

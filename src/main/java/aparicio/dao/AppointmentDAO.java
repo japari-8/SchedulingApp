@@ -11,9 +11,21 @@ import java.sql.*;
 import java.time.LocalDateTime;
 
 
-
+/** This class is used to Create, Read, Update, or Delete appointments from the database.*/
 public abstract class AppointmentDAO {
 
+    /**This method is called when an appointment needs to be created in the database. It takes arguments to create an appointment
+     * and saves to the database.
+     * @param title the appointment title
+     * @param descrip the appointment description
+     * @param location the appointment location
+     * @param type the appointment type
+     * @param startDtTm the appointment start date time
+     * @param endDtTm the appointment end date time
+     * @param customerId the appointment customer ID
+     * @param userId the appointment user ID
+     * @param contactId the appointment contact ID
+     * */
     public static void addAppointment(String title, String descrip, String location, String type, LocalDateTime startDtTm,
                                       LocalDateTime endDtTm, int customerId, int userId, int contactId) {
         try {
@@ -40,6 +52,10 @@ public abstract class AppointmentDAO {
         }
     }
 
+    /**This method is called when a list of all appointments needs to be created. It requests a list of all available
+     * appointments in the database.
+     * @return a list of all appointments
+     */
     public static ObservableList<Appointment> getAllAppointments() {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
@@ -75,7 +91,18 @@ public abstract class AppointmentDAO {
         return allAppointments;
     }
 
-
+    /**This method is called when an appointment needs to be updated.
+     * @param title the appointment title
+     * @param description the appointment description
+     * @param location the appointment location
+     * @param type the appointment type
+     * @param uStartDtTm the appointment start date time
+     * @param uEndDtTm the appointment end date time
+     * @param customerId the appointment customer ID
+     * @param userId the appointment user ID
+     * @param contactId the appointment contact ID
+     * @param appntId the appointment ID
+     */
     public static void updateAppointment (String title, String description, String location, String type,
                                           LocalDateTime uStartDtTm, LocalDateTime uEndDtTm, int customerId, int userId,
                                           int contactId, int appntId) {
@@ -106,7 +133,12 @@ public abstract class AppointmentDAO {
         }
     }
 
-
+    /**This method is called when a list of appointments needs to be created. It requests a list of all available
+     * appointments in the database that match a customer ID, excluding the appointment ID that is passed as an argument.
+     * @param customId the customer ID to match
+     * @param appntId the appointment ID to exclude
+     * @return a list of appointments matching customer ID and excluding appointment ID
+     * */
     public static ObservableList<Appointment> getAppntByCustID(int customId, int appntId) {
         ObservableList<Appointment> appntList = FXCollections.observableArrayList();
 
@@ -144,7 +176,11 @@ public abstract class AppointmentDAO {
         return appntList;
     }
 
-
+    /**This method is called when a list of appointments needs to be created. It requests a list of all available
+     * appointments in the database that match a customer ID. It is an overload method from the previous method.
+     * @param customId the customer ID to match
+     * @return a list of appointments matching customer ID
+     * */
     public static ObservableList<Appointment> getAppntByCustID(int customId) {
         ObservableList<Appointment> appntList = FXCollections.observableArrayList();
 
@@ -181,7 +217,11 @@ public abstract class AppointmentDAO {
         return appntList;
     }
 
-
+/**This method is called when a list of appointments needs to be created. It requests a list of all available
+ * appointments in the database that match a User ID.
+ * @param uId the user ID to match
+ * @return a list of appointments matching user ID
+ * */
     public static ObservableList<Appointment> getAppntByUserId(int uId) {
         ObservableList<Appointment> appntByUId = FXCollections.observableArrayList();
 
@@ -219,8 +259,9 @@ public abstract class AppointmentDAO {
 
     }
 
-
-
+    /**This method is called when an appointment needs to be deleted from the database.
+     * @param appointmentId the appointment ID to match for deletion
+     * */
     public static void deleteAppointment (int appointmentId) {
 
         try {
@@ -235,49 +276,9 @@ public abstract class AppointmentDAO {
         }
     }
 
-
-    public static ObservableList<Integer> getAllCustomerIDs() {
-        ObservableList<Integer> allCustomerIDs = FXCollections.observableArrayList();
-
-        try {
-            String sql = "SELECT Customer_ID FROM customers";
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                int cusId = rs.getInt("Customer_ID");
-                allCustomerIDs.add(cusId);
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return allCustomerIDs;
-    }
-
-
-    public static ObservableList<Contact> getAllContacts() {
-        ObservableList<Contact> allContacts = FXCollections.observableArrayList();
-
-        try {
-            String sql = "SELECT Contact_ID, Contact_Name FROM contacts";
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                int contactId = rs.getInt("Contact_ID");
-                String contactNm = rs.getString("Contact_Name");
-                Contact contact = new Contact(contactId, contactNm);
-                allContacts.add(contact);
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return allContacts;
-    }
-
-
+    /**This method is used to get a list of types from the appointments table in the database.
+     * @return a list of types
+     */
     public static ObservableList<String> getAllTypes() {
         ObservableList<String> allTypes = FXCollections.observableArrayList();
 
@@ -297,6 +298,11 @@ public abstract class AppointmentDAO {
         return allTypes;
     }
 
+    /**This method is called when a list of appointments needs to be created. It requests a list of all available
+     * appointments in the database that match a Contact ID.
+     * @param contId the contact ID to match
+     * @return a list of appointments matching contact ID
+     * */
     public static ObservableList<Appointment> getAppntByContactId(int contId) {
         ObservableList<Appointment> appntByConId = FXCollections.observableArrayList();
 
@@ -333,7 +339,9 @@ public abstract class AppointmentDAO {
         return appntByConId;
     }
 
-
+    /**This method is used to get a list of locations from the appointments table in the database.
+     * @return a list of locations
+     * */
     public static ObservableList<String> getAllLocations() {
         ObservableList<String> allLocations = FXCollections.observableArrayList();
 
@@ -352,6 +360,5 @@ public abstract class AppointmentDAO {
         }
         return allLocations;
     }
-
 
 }

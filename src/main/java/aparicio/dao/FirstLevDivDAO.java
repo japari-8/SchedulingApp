@@ -5,13 +5,17 @@ import aparicio.model.FirstLevelDivision;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import aparicio.model.Country;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
+/** This class is used to Create, Read, Update, or Delete first level divisions from the database.*/
 public class FirstLevDivDAO {
 
+    /**This method is called when a list of US divisions needs to be created.
+     * @return a list of US divisions
+     */
     public static ObservableList<FirstLevelDivision> getUsFirstLevDiv() {
 
         ObservableList<FirstLevelDivision> usStates = FXCollections.observableArrayList();
@@ -35,6 +39,9 @@ public class FirstLevDivDAO {
         return usStates;
     }
 
+    /**This method is called when a list of UK divisions needs to be created.
+     * @return a list of UK divisions
+     */
     public static ObservableList<FirstLevelDivision> getUkFirstLevDiv() {
 
         ObservableList<FirstLevelDivision> ukRegions = FXCollections.observableArrayList();
@@ -58,6 +65,9 @@ public class FirstLevDivDAO {
         return ukRegions;
     }
 
+    /**This method is called when a list of Canadian divisions needs to be created.
+     * @return a list of Canadian divisions
+     */
     public static ObservableList<FirstLevelDivision> getCanFirstLevDiv() {
 
         ObservableList<FirstLevelDivision> canProvinces = FXCollections.observableArrayList();
@@ -81,7 +91,10 @@ public class FirstLevDivDAO {
         return canProvinces;
     }
 
-
+    /**This method is used to request the name of a division associated with a division ID.
+     * @param divId the division ID to match
+     * @return a division matching tie division ID
+     */
     public static FirstLevelDivision getDivision (int divId) {
         FirstLevelDivision division = null;
         try {
@@ -100,27 +113,6 @@ public class FirstLevDivDAO {
             e.printStackTrace();
         }
         return division;
-    }
-
-
-    public static FirstLevelDivision getDivisionId (String StateProv) {
-        FirstLevelDivision FLevdiv = null;
-        try {
-            String sql = "SELECT Division_ID, Division FROM first_level_divisions WHERE Division = ?";
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ps.setString(1, StateProv);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                int dId = rs.getInt("Division_ID");
-                String stateP = rs.getString("Division");
-                FLevdiv = new FirstLevelDivision(dId, stateP);
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return FLevdiv;
     }
 
 }

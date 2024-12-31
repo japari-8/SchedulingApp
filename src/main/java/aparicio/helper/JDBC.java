@@ -3,6 +3,8 @@ package aparicio.helper;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+
+/** This class is used to manage the database connection and set the mysql driver.*/
 public abstract class JDBC {
     private static final String protocol = "jdbc";
     private static final String vendor = ":mysql:";
@@ -13,6 +15,8 @@ public abstract class JDBC {
     private static final String userName = "sqlUser"; // Username
     private static String password = "Passw0rd!"; // Password
     public static Connection connection;  // Connection Interface
+
+    /**This method is used to open the database connection. */
     public static void openConnection()
     {
         try {
@@ -26,6 +30,7 @@ public abstract class JDBC {
         }
     }
 
+    /**This method is used to close the database connection. */
     public static void closeConnection() {
         try {
             connection.close();

@@ -10,8 +10,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
+/** This class is used to only Read users from the database.*/
 public abstract class UserDAO {
 
+    /**This method is called when a list of all users needs to be created. It requests a list of all available
+     * users in the database.
+     * @return a list of all users
+     */
     public static ObservableList<User> getAllUsers() {
         ObservableList<User> users = FXCollections.observableArrayList();
 
@@ -35,6 +41,12 @@ public abstract class UserDAO {
         return users;
     }
 
+    /**This method is called when a user needs to be requested from the database. The user returned is written to the
+     * activity log.
+     * @param uName the username to match
+     * @param pWord the password to match
+     * @return the user that matches username and password
+     */
     public static User getUserLogedIn(String uName, String pWord) {
         User user = null;
 

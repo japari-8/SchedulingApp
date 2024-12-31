@@ -32,6 +32,8 @@ import static aparicio.dao.AppointmentDAO.getAllAppointments;
 import static aparicio.dao.CustomerDAO.getAllCustomerData;
 import static java.time.YearMonth.now;
 
+/**This class creates the Dashboard screen for the Scheduling Application.
+ * Contains all features and buttons and redirects to new screens.*/
 public class Dashboard implements Initializable {
 
     public TableView customerTableView;
@@ -60,10 +62,13 @@ public class Dashboard implements Initializable {
     public static User logedInUser;
     private static boolean firstTime = true;
 
+    /**This method stores the logged user's info to check for upcoming appointments. */
     public static void passLogedUser(User userLogedIn) {
         logedInUser = userLogedIn;
     }
 
+    /**This method checks if the user has an upcoming appointment in the next 15 mins .
+     * If it does, a pop-up window will alert the user.*/
     private void setAppointmentAlert() {
         if (!firstTime) {
             return;
@@ -102,7 +107,8 @@ public class Dashboard implements Initializable {
         }
     }
 
-
+    /**This method sets the customer and appointment tableviews with data.
+     * It calls the data from the mySql database.*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -130,7 +136,7 @@ public class Dashboard implements Initializable {
         contactIdCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
     }
 
-
+    /**This method is called when the Add customer button is clicked. It redirects the user to the Add Customer form.*/
     public void onAddCustomer(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/AddCustomer.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -140,6 +146,8 @@ public class Dashboard implements Initializable {
         stage.show();
     }
 
+    /**This method is called when the Update customer button is clicked. This method reads the customer selected and
+     * opens up the Add Customer screen with the customer selected data populated.*/
     public void onUpdateCustomer(ActionEvent actionEvent) throws IOException {
 
         Customer custToUpdate = (Customer) customerTableView.getSelectionModel().getSelectedItem();
@@ -163,7 +171,8 @@ public class Dashboard implements Initializable {
 
     }
 
-
+    /** This method is called when the Customer Delete button is clicked.
+     * This method deletes the customer and all associated appointments. If no selection is made, will display Alert message.*/
     public void onDeleteCustomer(ActionEvent actionEvent) throws IOException {
        Customer cus = (Customer) customerTableView.getSelectionModel().getSelectedItem();
 
@@ -192,8 +201,7 @@ public class Dashboard implements Initializable {
         stage.show();
     }
 
-
-
+    /** This method is called when the Add button for Appointments is clicked. This method opens up the Add Appointment screen.*/
     public void onAddAppnt(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/AddAppointment.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -203,6 +211,8 @@ public class Dashboard implements Initializable {
         stage.show();
     }
 
+    /**This method is called when the Update Appointment button is clicked. This method reads the appointment selected and
+     * opens up the Add Appointment screen with the appointment selected data populated.*/
     public void onUpdateAppnt(ActionEvent actionEvent) throws IOException {
 
         Appointment appntToUpdate = (Appointment) appntTableView.getSelectionModel().getSelectedItem();
@@ -228,6 +238,8 @@ public class Dashboard implements Initializable {
 
     }
 
+    /** This method is called when the Appointment Delete button is clicked.
+     * This method deletes the Appointment. If no selection is made, will display Alert message.*/
     public void onDeleteAppnt(ActionEvent actionEvent) throws IOException {
         Appointment appnt = (Appointment) appntTableView.getSelectionModel().getSelectedItem();
 
@@ -252,7 +264,7 @@ public class Dashboard implements Initializable {
 
 
                 Alert alert2 = new Alert(Alert.AlertType.ERROR);
-                alert2.setTitle("Error Dialog");
+                alert2.setTitle("Alert Dialog");
                 alert2.setContentText("Appointment ID: " + appntIdAsSt + " of type " + type + " has been deleted.");
                 alert2.showAndWait();
             }
@@ -262,7 +274,7 @@ public class Dashboard implements Initializable {
         messageLabel.setText("Message: Appointment ID: " + appntIdAsSt + " of type: " + type + " has been deleted.");
     }
 
-
+    /**This method is called when the All radio button is clicked. It sets the Appointment tableview with all stored appointments*/
     public void onAllAppntView(ActionEvent actionEvent) throws IOException {
 
         Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
@@ -273,7 +285,8 @@ public class Dashboard implements Initializable {
         stage.show();
     }
 
-    //Multiple statement Lambda Expression
+    /**This method is called when the Month radio button is clicked. It uses a multiple statement lambda expression to filter out
+     * appointments in the next 30 days and sets the tableview with these appointments*/
     public void onMonthAppntView(ActionEvent actionEvent) throws IOException {
         ObservableList<Appointment> allAppts = FXCollections.observableArrayList();
         allAppts = getAllAppointments();
@@ -297,7 +310,8 @@ public class Dashboard implements Initializable {
     }
 
 
-    //Multiple statement Lambda Expression
+    /**This method is called when the Week radio button is clicked. It uses a multiple statement lambda expression to filter out
+     * appointments in the next 7 days and sets the tableview with these appointments*/
     public void onWeekAppntView(ActionEvent actionEvent) {
         ObservableList<Appointment> allAppts = FXCollections.observableArrayList();
         allAppts = getAllAppointments();
@@ -320,7 +334,7 @@ public class Dashboard implements Initializable {
         appntTableView.setItems(listNext7Days.next7Days(allAppts, aptsForNext7Days, currentLdt, ldtIn7Days));
     }
 
-
+    /**This method is called when the Run Reports button is clicked. It redirects the user the Reports screen.*/
     public void onRunReport(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Reports.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -330,7 +344,7 @@ public class Dashboard implements Initializable {
         stage.show();
     }
 
-
+    /** This method is called when the Exit button is clicked. This method closes the program.*/
     public void onExit(ActionEvent actionEvent) {
 
         JDBC.closeConnection();

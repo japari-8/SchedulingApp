@@ -1,0 +1,5 @@
+module:aparicio.schedulingapp
+aparicio.controller
+aparicio.dao
+aparicio.helper
+aparicio.model
