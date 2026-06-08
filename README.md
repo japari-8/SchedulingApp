@@ -4,8 +4,8 @@
 GUI based scheduling desktop application that allows users to Add, update, and delete customers and appointments.
 
 ## Author:
-Juan Aparicio  
-Contact: japari6@wgu.edu
+Juan Aparicio Jr  
+Contact: japari6@wgu.edu  
 V 0.0.1   Date: 12-23-2024
 
 ## Tech Stack
