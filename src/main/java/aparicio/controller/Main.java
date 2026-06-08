@@ -24,7 +24,7 @@ public class Main extends Application {
     }
 
     /** This method is the main method. This method launches the Login page.
-     * It creates a README.txt file for app information.
+     * It creates a README.md file for app information.
      * Also opens and closes the JDBC connection.*/
     public static void main(String[] args) throws SQLException, IOException {
 
@@ -34,7 +34,7 @@ public class Main extends Application {
 
         //Locale.setDefault(new Locale("fr"));
 
-        String filename2 = "README.txt";
+        String filename2 = "README.md";
         PrintWriter outputFile = new PrintWriter(filename2);
         outputFile.println("Title: Scheduling App");
         outputFile.println("Purpose: GUI based scheduling desktop application that allows users to Add, update, and delete " +
