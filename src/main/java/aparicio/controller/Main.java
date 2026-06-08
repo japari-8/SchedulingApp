@@ -53,11 +53,11 @@ public class Main extends Application {
         outputFile.println("mysql-connector-java-8.0.25");
         outputFile.close();
 
-        JDBC.openConnection();
+        //JDBC.openConnection();
         launch();
 
 
-        JDBC.closeConnection();
+        //JDBC.closeConnection();
 
     }
 }
