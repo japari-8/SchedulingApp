@@ -88,16 +88,16 @@ public class Login implements Initializable {
 
         //FIXME: Following block of code has been added to open dashboard without providing credentials.
         //FIXME: Uncomment Dashboard.java line 79, 117, and 126. Main.java line 56 and 60 to restore JDBC.
-        Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1000, 750);
-        stage.setTitle("Dashboard");
-        stage.setScene(scene);
-        stage.show();
+//        Parent root = FXMLLoader.load(getClass().getResource("/aparicio/view/Dashboard.fxml"));
+//        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+//        Scene scene = new Scene(root, 1000, 750);
+//        stage.setTitle("Dashboard");
+//        stage.setScene(scene);
+//        stage.show();
 
         //FIXME: Following code has been commented out to bypass Login authentication since
         //FIXME: the JDBC database is not installed
-    /*    Iterator<User> iterator = UserDAO.getAllUsers().iterator();
+        Iterator<User> iterator = UserDAO.getAllUsers().iterator();
         while (iterator.hasNext()) {
             User userN = iterator.next();
             String userNDB = userN.getUserName();
@@ -139,7 +139,7 @@ public class Login implements Initializable {
                 }
                 alert.showAndWait();
             }
-    */
+
 
     }
 

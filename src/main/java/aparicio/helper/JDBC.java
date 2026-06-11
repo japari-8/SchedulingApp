@@ -8,12 +8,12 @@ import java.sql.DriverManager;
 public abstract class JDBC {
     private static final String protocol = "jdbc";
     private static final String vendor = ":mysql:";
-    private static final String location = "//localhost/";
-    private static final String databaseName = "client_schedule";
+    private static final String location = "//localhost:3306/";
+    private static final String databaseName = "client_scheduling";
     private static final String jdbcUrl = protocol + vendor + location + databaseName + "?connectionTimeZone = SERVER"; // LOCAL
     private static final String driver = "com.mysql.cj.jdbc.Driver"; // Driver reference
-    private static final String userName = "sqlUser"; // Username
-    private static String password = "Passw0rd!"; // Password
+    private static final String userName = "root"; // Username
+    private static String password = "Passw0rd!forServer"; // Password
     public static Connection connection;  // Connection Interface
 
     /**This method is used to open the database connection. */

@@ -34,26 +34,26 @@ public class Main extends Application {
 
         //Locale.setDefault(new Locale("fr"));
 
-        String filename2 = "README.md";
-        PrintWriter outputFile = new PrintWriter(filename2);
-        outputFile.println("Title: Scheduling App");
-        outputFile.println("Purpose: GUI based scheduling desktop application that allows users to Add, update, and delete " +
-                "customers and appointments.");
-        outputFile.println("Author: Juan Aparicio   Contact: japari6@wgu.edu");
-        outputFile.println("V 0.0.1   Date: 12-23-2024");
-        outputFile.println("IntelliJ Community 2023.2.2");
-        outputFile.println("Java JDK version 17.0.1");
-        outputFile.println("JavaFX-SDK-17.0.6");
-        outputFile.println("Directions: Launch Scheduling app, login, message will appear for upcoming appointment.");
-        outputFile.println("In Dashboard top section displays customers and buttons to add/delete/update customer data.");
-        outputFile.println("Add and delete buttons will redirect to forms. In Dashboard bottom sections displays appointments.");
-        outputFile.println("User can filter appointments for the next 30 days or 7 days. Add and delete buttons redirect to forms.");
-        outputFile.println("Run Reports button redirects to 3 different type of reports.");
-        outputFile.println("Third report filters all appointments by Country.");
-        outputFile.println("mysql-connector-java-8.0.25");
-        outputFile.close();
+//        String filename2 = "README.md";
+//        PrintWriter outputFile = new PrintWriter(filename2);
+//        outputFile.println("Title: Scheduling App");
+//        outputFile.println("Purpose: GUI based scheduling desktop application that allows users to Add, update, and delete " +
+//                "customers and appointments.");
+//        outputFile.println("Author: Juan Aparicio   Contact: japari6@wgu.edu");
+//        outputFile.println("V 0.0.1   Date: 12-23-2024");
+//        outputFile.println("IntelliJ Community 2023.2.2");
+//        outputFile.println("Java JDK version 17.0.1");
+//        outputFile.println("JavaFX-SDK-17.0.6");
+//        outputFile.println("Directions: Launch Scheduling app, login, message will appear for upcoming appointment.");
+//        outputFile.println("In Dashboard top section displays customers and buttons to add/delete/update customer data.");
+//        outputFile.println("Add and delete buttons will redirect to forms. In Dashboard bottom sections displays appointments.");
+//        outputFile.println("User can filter appointments for the next 30 days or 7 days. Add and delete buttons redirect to forms.");
+//        outputFile.println("Run Reports button redirects to 3 different type of reports.");
+//        outputFile.println("Third report filters all appointments by Country.");
+//        outputFile.println("mysql-connector-java-8.0.25");
+//        outputFile.close();
 
-        //JDBC.openConnection();
+        JDBC.openConnection();
         launch();
 
 

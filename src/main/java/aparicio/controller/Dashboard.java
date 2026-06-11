@@ -76,7 +76,7 @@ public class Dashboard implements Initializable {
         firstTime = false;
 
         ObservableList<Appointment> apptsByUserList = FXCollections.observableArrayList();
-        //apptsByUserList = AppointmentDAO.getAppntByUserId(logedInUser.getUserId());
+        apptsByUserList = AppointmentDAO.getAppntByUserId(logedInUser.getUserId());
 
         LocalDateTime current = LocalDateTime.now();
         LocalDateTime in15Min = current.plusMinutes(15);
@@ -114,7 +114,7 @@ public class Dashboard implements Initializable {
 
         setAppointmentAlert();
 
-        //customerTableView.setItems(getAllCustomerData());
+        customerTableView.setItems(getAllCustomerData());
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         fullNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -123,7 +123,7 @@ public class Dashboard implements Initializable {
         divisionIdCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
         countryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
 
-        //appntTableView.setItems(getAllAppointments());
+        appntTableView.setItems(getAllAppointments());
         AppntCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         descriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
